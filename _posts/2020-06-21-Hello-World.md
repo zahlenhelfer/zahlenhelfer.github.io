@@ -1,12 +1,16 @@
 ---
 layout: post
-title: It has to start somewhere...
+title: It has to start somewhere...or just Hello World
 ---
 
 > It has to start somewhere
+
 > It has to start sometime
+
 > What better place than here
+
 > What better time than now
+
 > All hell can't stop us now
 
 -- **correct,** Rage Against The Machine Song Guerrilla Radio.
