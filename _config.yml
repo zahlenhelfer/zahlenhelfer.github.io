@@ -75,6 +75,7 @@ sass:
 gems:
   - jekyll-sitemap # Create a sitemap using the official Jekyll sitemap gem
   - jekyll-feed # Create an Atom feed using the official Jekyll feed gem
+  - jekyll-algolia # added searchengine
 
 # Exclude these files from your production _site
 exclude:
@@ -83,3 +84,11 @@ exclude:
   - LICENSE
   - README.md
   - CNAME
+
+# algolia search
+algolia:
+  application_id: AQNL5IEM1A
+  index_name: blog_posts # You can replace that with whatever name you want
+  files_to_exclude: []
+  nodes_to_index: 'article'
+  search_only_api_key: 7ef95e5c7e16912e8e1c1fff8065c1ed
