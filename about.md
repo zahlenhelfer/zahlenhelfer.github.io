@@ -1,25 +1,16 @@
 ---
 layout: page
-title: About
+title: About me
 permalink: /about/
 ---
 
-# Marcus Ross
+## Marcus Ross
 
 hybrid between worlds  
 cloud and on-prem  
 agile and waterfall guy  
 developer and operation guy
 20 years of it-expierence
-
-### More Information about me
-
-- AWS Champion Trainer
-- Alibaba Certified Trainer
-- Microsoft Certified Trainer
-- ITIL Expert & Prince2 Practitioner
-- Certified SCRUM Master (Scrum Alliance)
-- ReHoRuLi Juggling Trainer
 
 ### Contact me
 
