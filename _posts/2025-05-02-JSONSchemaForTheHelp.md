@@ -87,7 +87,7 @@ image:
   pullPolicy: enforced
 ```
 
-```
+```console
 $ helm lint .
 ==> Linting .
 [ERROR] values.yaml: - image.repository: Invalid type. Expected: string, given: boolean
@@ -103,7 +103,7 @@ image:
   pullPolicy: IfNotPresent
 ```
 
-```
+```console
 $ helm lint .
 ==> Linting .
 [INFO] Chart.yaml: icon is recommended
