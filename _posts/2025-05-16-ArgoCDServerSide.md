@@ -8,6 +8,7 @@ tags:
   - tip
   - de
   - argocd
+  - fehlermeldung
 permalink: /:year/:month/:day/:title:output_ext
 published: false
 ---
@@ -17,26 +18,15 @@ published: false
 
 Für die Fehlermeldung  `Too long must have at most 262144 bytes` im ArgoCD, ist das Problem **nicht** ArgoCD sondern Kubernetes.
 
-Bei einem verwenden von `kubectl apply` das z.B. ein Deployment aktualisieren wirst Du merken, 
-(was Argo CD tut), wird versucht, eine last-applied-configuration-Annotation zu setzen, die die JSON-Darstellung der zuletzt angewendeten Objektkonfiguration enthält.
-
-Wenn wir zum Beispiel ein Deployment-Objekt haben, das wir mit kubectl apply aktualisieren, wird die last-applied-configuration-Annotation das JSON-serialisierte Format des gesamten Deployment-Objekts enthalten:
+Bei einem verwenden von z.B. `kubectl apply` um ein Deployment zu aktualisieren,  wird  eine Annotation `last-applied-configuration-Annotation` erstellt bzw. aktualisiert. Es enthält die JSON-Darstellung der zuletzt angewendeten Deploymentkonfiguration.
 
 ```yaml
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  annotations:
-    kubectl.kubernetes.io/last-applied-configuration: |
-      {"apiVersion":"apps/v1","kind":"Deployment", "metadata":{}, ...}
+
 ```
 
-Dies ist für die meisten Ressourcen kein Problem, aber es gibt Objekte, die die 256kb-Grenze überschreiten, wie z.B. die Prometheus CRD aus dem kube-prometheus-stack Helm-Diagramm, die 500kb groß ist.
+Das ist bei den meisten meisten Ressourcen kein Problem. Es gibt aber Objekte die sehr schnell die 256kb-Grenze überschreiten. Sehr prominent ist hier der Prometheus CRD. Die meisten werden daher die o.g. Fehlermeldung wohl aus dem kube-prometheus-stack kennen. (500kb)
 
-## Die Lösung: automatische Schema Generierung aus der `values.yaml`
-Hier sei das GitHub-Projekt [helm-values-schema-json](https://github.com/losisin/helm-values-schema-json/tree/main) genannt. 
-
-
+## Die Lösung: Verwendung von Server Side Apply
 Beim Synchronisieren der Prometheus-CRD in Argo CD wird kubectl apply ausgeführt und versucht, die 500kb große JSON-Darstellung als Annotation hinzuzufügen. Dies führt zu der Fehlermeldung "Too long: must have at most 262144 bytes", da die Größe der Kubernetes-Annotationen auf 256kb (oder 262144 Bytes) begrenzt ist.
 
 Lösung
@@ -44,11 +34,9 @@ Die Lösung besteht darin, die Verwendung von Client Side Apply (die aktuelle St
 
 Es ist geplant, dass Server Side Apply in zukünftigen Kubernetes- und Argo-CD-Versionen die Standard-Anwendungsmethode sein wird, aber im Moment müssen wir es explizit aktivieren.
 
-Die Unterstützung für Server Side Apply wurde in Argo CD v2.5 hinzugefügt und kann aktiviert werden, indem man sie in den Sync-Optionen für eine Anwendungsressource einstellt:
+Die Unterstützung für Server Side Apply wurde mit Argo CD v2.5 hinzugefügt und kann aktiviert werden, indem man sie in den Sync-Optionen für eine Anwendungsressource einstellt:
 
 ```yaml
-apiVersion: argoproj.io/v1alpha1
-kind: Application
 spec:
   syncPolicy:
     syncOptions:
