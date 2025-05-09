@@ -30,7 +30,7 @@ image:
 ```
 
 ## Die Lösung: validieren – bevor deployed wird!
-Hier kommt [JSON Schema](https://json-schema.org/) ins Spiel. Seit [Helm 3.5](https://helm.sh/docs/faq/changes_since_helm2/#validating-chart-values-with-jsonschema) ist es möglich eine `values.schema.json` im Chart-Verzeichnis zu hinterlegen. Diese beschreibt die erwartete Struktur. Jetzt kann Helm, die `values.yaml`-Datei beim Rendern validieren – das passiert automatisch bei:
+Hier kommt [JSON Schema](https://json-schema.org/) ins Spiel. Seit [Helm 3.5](https://helm.sh/docs/faq/changes_since_helm2/#validating-chart-values-with-jsonschema) ist es möglich eine `values.schema.json` im Chart-Verzeichnis zu hinterlegen. Diese beschreibt die Struktur. Jetzt kann Helm, die `values.yaml`-Datei beim Rendern validieren und notfalls meckern – das passiert automatisch bei:
 
 - `helm install`
 - `helm upgrade`
