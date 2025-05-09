@@ -12,8 +12,13 @@ permalink: /:year/:month/:day/:title:output_ext
 published: false
 ---
 
-## Das Problem: Kubernetes-Objekte haben eine feste Größenbeschränkung von 256kb für Annotationen.
-Wenn kubectl apply verwendet wird, um Ressourcen zu aktualisieren (was Argo CD tut), wird versucht, eine last-applied-configuration-Annotation zu setzen, die die JSON-Darstellung der zuletzt angewendeten Objektkonfiguration enthält.
+## Das Problem: Größenbeschränkung (256kb) bei Kubernetes-Objekten (für Annotationen).
+"Ist doch klar" - mögen die Erfahrenen sagen. Aber auch Klassiker haben einen Platz wiederholt zu werden.
+
+Für die Fehlermeldung  `Too long must have at most 262144 bytes` im ArgoCD, ist das Problem **nicht** ArgoCD sondern Kubernetes.
+
+Bei einem verwenden von `kubectl apply` das z.B. ein Deployment aktualisieren wirst Du merken, 
+(was Argo CD tut), wird versucht, eine last-applied-configuration-Annotation zu setzen, die die JSON-Darstellung der zuletzt angewendeten Objektkonfiguration enthält.
 
 Wenn wir zum Beispiel ein Deployment-Objekt haben, das wir mit kubectl apply aktualisieren, wird die last-applied-configuration-Annotation das JSON-serialisierte Format des gesamten Deployment-Objekts enthalten:
 
