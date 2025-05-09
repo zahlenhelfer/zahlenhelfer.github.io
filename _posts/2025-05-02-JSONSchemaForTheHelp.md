@@ -15,7 +15,7 @@ published: true
 
 ## Das Problem: falsche Datentypen, Felder oder Werte in der `values.yaml`
 
-Helm ist das bevorzugte Paketmanagement-Tool für Kubernetes. Doch gerade bei der Arbeit mit der `values.yaml`-Dateien schleichen sich leicht Fehler ein. Beispiele dafür sind:
+Helm ist das bevorzugte Paketmanagement-Tool für Kubernetes. Doch gerade bei der Arbeit mit der `values.yaml`-Datei schleichen sich leicht Fehler ein. Beispiele dafür sind:
 
 - Typ-Validierung: Der Wert `image.tag` ist ein String, daher "1.5" und nicht 1.5
 - Bereichs-Validierung: Der Wert für `replicaCount` sollte z.B. zwischen 1 und 10 liegen.
@@ -30,7 +30,7 @@ image:
 ```
 
 ## Die Lösung: validieren – bevor deployed wird!
-Hier kommt [JSON Schema](https://json-schema.org/) ins Spiel. Seit [**Helm 3.5**](https://helm.sh/docs/faq/changes_since_helm2/#validating-chart-values-with-jsonschema) ist es möglich eine `values.schema.json` im Chart-Verzeichnis zu hinterlegen. Diese beschreibt die erwartete Struktur. Jetzt kann Helm, die `values.yaml`-Datei beim Rendern validieren – das passiert automatisch bei:
+Hier kommt [JSON Schema](https://json-schema.org/) ins Spiel. Seit [Helm 3.5](https://helm.sh/docs/faq/changes_since_helm2/#validating-chart-values-with-jsonschema) ist es möglich eine `values.schema.json` im Chart-Verzeichnis zu hinterlegen. Diese beschreibt die erwartete Struktur. Jetzt kann Helm, die `values.yaml`-Datei beim Rendern validieren – das passiert automatisch bei:
 
 - `helm install`
 - `helm upgrade`
@@ -38,7 +38,7 @@ Hier kommt [JSON Schema](https://json-schema.org/) ins Spiel. Seit [**Helm 3.5**
 - `helm lint`
 
 ## Ein Beispiel: `image.repository` und `image.pullpolicy`
-Beim `image.repository`-Wert soll per RegEx geprüft werden, ob dieser ein Valides Docker-Image ist.
+Beim `image.repository`-Wert soll per RegEx geprüft werden, ob dieser ein Valides Docker-Image ist. Die `image.pullpolicy` kennt nur drei Werte, damit wäre alles anderen falsch.
 
 ```yaml
 image.repository # Docker-Image Bspl.: "acmeorg/nginx"
