@@ -1,6 +1,6 @@
 ---
 layout: post
-title: AzuredevOps und der SSH-Key - es kann nur einen geben!
+title: AzureDevOps und der SSH-Key - es kann nur einen geben!
 category: azuredevops
 tags:
   - blog
@@ -14,13 +14,25 @@ published: false
 
 ## Das Problem: `remote: Public key authentication failed.`
 
-Wer in AzureDevOps SSH-Keys z.B. für Repositories nutzen möchte, könnte hier stolpern.
-
+Wer in AzureDevOps SSH-Keys z.B. für Repositories nutzen möchte, könnte über folgenden Meldung stolpern:
 ```
 remote: Public key authentication failed.
 fatal: Could not read from remote repository.
 ```
 
+Das Spannede ist die Konstellation. Auf meinem Arbeitsrechner bekomme ich die Fehlermeldung nicht, auf meinem HomeOffice-Rechner schon.
+
+Und ja, einige sagen  "ist doch klar" - hast Du die `.ssh/config` gepflegt. Ja das habe ich. wahrscheinlich dein Schlüssel versuch mal per ssh -vvv herauszufinden was los ist.
+
+Beispieleintrag aus der `.ssh/config`:
+```
+Host ssh.dev.azure.com
+  HostName ssh.dev.azure.com
+  IdentityFile ~/.ssh/key_for_work
+```
+
+https://learn.microsoft.com/en-us/azure/devops/repos/git/use-ssh-keys-to-authenticate?view=azure-devops#set-up-ssh-key-authentication
+To generate key files using the RSA algorithm supported by Azure DevOps (either RSA-SHA2-256 or RSA-SHA2-512), run one of the following commands from a PowerShell or another shell such as `bash` on your client
 
 https://learn.microsoft.com/en-us/azure/devops/repos/git/use-ssh-keys-to-authenticate?view=azure-devops#q-i-have-multiple-ssh-keys-how-do-i-use-the-correct-ssh-key-for-azure-devops
 
@@ -40,13 +52,8 @@ image.pullPolicy # Werte: [IfNotPresent, Always, Never]
 ```
 
 Mit einer einfachen `values.schema.json` bekommt Helm das ganze mit und kann reagieren.
+IdentitiesOnly yes
 
-Beispiel der values.schema.json:
-```
-Host ssh.dev.azure.com
-  HostName ssh.dev.azure.com
-  IdentityFile ~/.ssh/private_key_for_fabrikam
-  IdentitiesOnly yes
 ```
 
 ## Fazit:

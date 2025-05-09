@@ -111,7 +111,7 @@ $ helm lint .
 1 chart(s) linted, 0 chart(s) failed
 ```
 
-## Fazit:
+## Fazit
 - Frühzeitige Fehlererkennung
 - Bessere Dokumentation der erwarteten Werte
 - Einfachere Nutzung für Dev-Teams

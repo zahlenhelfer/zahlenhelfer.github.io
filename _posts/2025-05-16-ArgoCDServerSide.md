@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Behebung des ArgoCD-Fehler "Too long must have at most 262144 bytes"
+title: ArgoCD-Fehler "Too long must have at most 262144 bytes" - ein Klassiker
 category: kubernetes
 tags:
   - blog
@@ -50,4 +50,6 @@ spec:
     - ServerSideApply=true
 ```
 
-Argo CD Versionen kleiner als v2.5 haben keine Unterstützung für Server Side Apply. In diesen Fällen können wir auf die Verwendung von kubectl replace zurückgreifen, um das Objekt zu aktualisieren. Wir können dies tun, indem wir die Sync-Option Replace=true setzen. Beachten Sie jedoch, dass replace zu unerwarteten Ergebnissen führen kann, wenn mehrere Clients ein Objekt ändern.
+Argo CD Versionen kleiner als v2.5 haben **keine** Unterstützung für Server Side Apply. In diesen Fällen können wir auf die Verwendung von kubectl replace zurückgreifen, um das Objekt zu aktualisieren. Wir können dies tun, indem wir die Sync-Option Replace=true setzen. Beachten Sie jedoch, dass replace zu unerwarteten Ergebnissen führen kann, wenn mehrere Clients ein Objekt ändern.
+
+## Fazit:
