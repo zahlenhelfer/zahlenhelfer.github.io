@@ -20,8 +20,7 @@ Nach dem letzten Post, stellt sich natürlich die Frage:
 "Gibt es Tools die das Erstellen und Pflegen von JSON-Schema Dateien für Helm vereinfachen"?
 
 ## Die Lösung: automatische Schema Generierung aus der `values.yaml`
-Hier sei das GitHub-Projekt [helm-values-schema-json](https://github.com/losisin/helm-values-schema-json/tree/main) genannt. 
+Hier sei das GitHub-Projekt [helm-values-schema-json](https://github.com/losisin/helm-values-schema-json/tree/main) genannt. Dort gibt es sowohl für für die Kommandozeile ein Tool, aber noch automatisierter eine GitHub-Action die das ganze dann noch bequemer erledigt.
 
 ## Beispiel:  Schema Generierung per GitHub-Action
-
 
