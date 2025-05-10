@@ -11,6 +11,7 @@ tags:
   - github
   - tip
   - de
+  - schema
 permalink: /:year/:month/:day/:title:output_ext
 published: false
 ---
@@ -24,3 +25,24 @@ Hier sei das GitHub-Projekt [helm-values-schema-json](https://github.com/losisin
 
 ## Beispiel:  Schema Generierung per GitHub-Action
 
+```yaml
+name: Generate values schema json
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.ref }}
+      - name: Generate values schema json
+        uses: losisin/helm-values-schema-json-action@v1
+        with:
+          input: values.yaml
+          git-push: true
+          git-commit-message: "chore: update values.schema.json"
+```

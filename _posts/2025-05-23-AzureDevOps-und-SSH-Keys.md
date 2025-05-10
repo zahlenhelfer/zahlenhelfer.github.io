@@ -39,23 +39,51 @@ https://learn.microsoft.com/en-us/azure/devops/repos/git/use-ssh-keys-to-authent
 `ssh-keygen -t rsa-sha2-512`
 
 ```
-
-## Die Lösung: validieren – bevor deployed wird!
-Hier kommt [JSON Schema](https://json-schema.org/) ins Spiel. Seit [Helm 3.5](https://helm.sh/docs/faq/changes_since_helm2/#validating-chart-values-with-jsonschema) ist es möglich eine `values.schema.json` im Chart-Verzeichnis zu hinterlegen. Diese beschreibt die erwartete Struktur. Jetzt kann Helm, die `values.yaml`-Datei beim Rendern validieren – das passiert automatisch bei:
-
-## Ein Beispiel: `image.repository` und `image.pullpolicy`
-Beim `image.repository`-Wert soll per RegEx geprüft werden, ob dieser ein Valides Docker-Image ist. Die `image.pullpolicy` kennt nur drei Werte, damit wäre alles anderen falsch.
-
-```yaml
-image.repository # Docker-Image Bspl.: "acmeorg/nginx"
-image.pullPolicy # Werte: [IfNotPresent, Always, Never]
+ssh -T git@ssh.dev.azure.com
 ```
 
-Mit einer einfachen `values.schema.json` bekommt Helm das ganze mit und kann reagieren.
+### Q: How can I use a nondefault key location, that is, not ~/.ssh/id_rsa and ~/.ssh/id_rsa.pub?
+
+**A:** To use a key stored in a different place than the default, perform these two tasks:
+
+1. The keys must be in a folder that only you can read or edit. If the folder has wider permissions, SSH doesn't use the keys.
+    
+2. You must let SSH know the location of the key, for example, by specifying it as an "Identity" in the SSH config:
+    
+    Copy
+    
+    ```
+    Host ssh.dev.azure.com
+      IdentityFile ~/.ssh/id_rsa_azure
+      IdentitiesOnly yes
+    ```
+    
+
+The `IdentitiesOnly yes` setting ensures that SSH doesn't use any other available identity to authenticate. This setting is particular important if more than one identity is available.
+
+[](https://learn.microsoft.com/en-us/azure/devops/repos/git/use-ssh-keys-to-authenticate?view=azure-devops#q-i-have-multiple-ssh-keys-how-do-i-use-the-correct-ssh-key-for-azure-devops)
+
+### Q: I have multiple SSH keys. How do I use the correct SSH key for Azure DevOps?
+
+**A:** Generally, when you configure multiple keys for an SSH client, the client attempts to authenticate with each key sequentially until the SSH server accepts one.
+
+However, this approach doesn't work with Azure DevOps due to technical constraints related to the SSH protocol and the structure of our Git SSH URLs. Azure DevOps accepts the first key provided by the client during authentication. If this key is invalid for the requested repository, the request fails without attempting any other available keys, resulting in the following error:
+
+Copy
+
+```
+remote: Public key authentication failed.
+fatal: Could not read from remote repository.
+```
+
+For Azure DevOps, you need to configure SSH to explicitly use a specific key file. The procedure is the same as when using a key stored in a [nondefault location](https://learn.microsoft.com/en-us/azure/devops/repos/git/use-ssh-keys-to-authenticate?view=azure-devops#non-default-keys). Tell SSH to use the correct SSH key for the Azure DevOps host.
+
+[](https://learn.microsoft.com/en-us/azure/devops/repos/git/use-ssh-keys-to-authenticate?view=azure-devops#q-how-do-i-use-different-ssh-keys-for-different-organizations-on-azure-devops)
+```
+
 IdentitiesOnly yes
 
 ```
-
 ## Fazit:
 - ssh -vvv kann helfen.
 - unterstützten Cypher überprüfen
