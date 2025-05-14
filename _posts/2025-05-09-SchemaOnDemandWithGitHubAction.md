@@ -1,6 +1,6 @@
 ---
 layout: post
-title: JSON-Schema für Helm per GitHubActions automatisch erstellen
+title: JSON-Schema für Helm automatisch per GitHub-Actions erstellen
 category: kubernetes
 tags:
   - blog
