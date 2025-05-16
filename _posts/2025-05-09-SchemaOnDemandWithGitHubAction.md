@@ -23,8 +23,8 @@ Nach dem [letzten Post](https://zahlenhelfer.github.io/2025/05/02/JSONSchemaForT
 ## Die Lösung: automatische Schema Generierung aus der `values.yaml`
 Hier sei das GitHub-Projekt [helm-values-schema-json](https://github.com/losisin/helm-values-schema-json/tree/main) genannt. Dort gibt es  für für die Kommandozeile ein Tool.  Aber noch schöner ist die GitHub-Action, die das ganze dann noch bequemer erledigt. Ob Du also einen PreCommit-Hook nutzt oder entspannt dem GitHub-Runner die Arbeit überlässt,  Du tust deiner Chart Qualität etwas gutes. Das Tool liest dabei die `values.yaml` aus und erstellt ein entsprechendes JSON-Schema. Wenn Du dabei auch noch Annotationen in der `values.yaml` hinzufügst, wird es noch magischer! Lass uns schauen wie es funktionier.
 
-## Beispiel:  Schema Generierung per GitHub-Action
-Aber als erstes erstmal den GitHub-Workflow erstellen (`.github/.yaml`)
+## Ein Beispiel:  Schema Generierung per GitHub-Action
+Aber als erstes erstmal den GitHub-Workflow im Projekt erstellen (`.github/workflows/helm-json-values.yaml`)
 
 ```yaml
 name: Generate values schema json
@@ -47,3 +47,17 @@ jobs:
           git-push: true
           git-commit-message: "chore: update values.schema.json"
 ```
+
+Hier wird bei jedem `push` auf den `main`-Branch das Projekt ausgecheckt und aktuell nur die `values.yaml` verarbeitet. Die verwendete GitHub-Action unterstützt noch wesentlich mehr Spielarten, das Ganze ist hier bewusst einfach gehalten. Die erstellte `values.schema.json`wird dann mittels `git-push: true`commited. Denkt dabei bitte daran das der `commit` aus der Action auch die Berechtigung benötigt.  Schaut einfach mal in Eurem Repo unter `Settings -> Code and automation -> Actions -> General` und dann im Bereich `Workflow-Permissions`. Hier sollte im einfachsten Fall einfach ein `Read and write permissionsWorkflows have read and write permissions in the repository for all scopes.`ausgewählt sein.
+
+## Mehr Magie in der values.yaml
+Die erstellte `values.schema.json` ist recht generisch. Tolle Features wie die Werteliste `Always, Never, IfNotPresent` bei der `pullPolicy` aus dem letzten Posting sucht man vergebens. Hier können wir mit einem einfachen Trick nachschärfen. Kommentare in die `values.yaml`einführen.
+
+```yaml
+image:
+  repository: ghcr.io/stevedetm/restart-pod-job # @schema pattern: ^[a-z0-9./-]+$
+  pullPolicy: IfNotPresent # @schema enum: [IfNotPresent, Always, Never]
+```
+
+Direkt hinter der jeweiligen Wertzuweisung wird per `#`ein Kommentar erstellt. Die Annotation `@schema enum: [IfNotPresent, Always, Never]` weist dann entsprechend die Werte zu.
+## Fazit
