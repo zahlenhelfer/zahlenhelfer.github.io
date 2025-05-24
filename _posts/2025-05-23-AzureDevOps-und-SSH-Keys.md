@@ -22,7 +22,7 @@ fatal: Could not read from remote repository.
 
 Das Spannede ist die Konstellation. Auf meinem Arbeitsrechner bekomme ich die Fehlermeldung nicht, auf meinem HomeOffice-Rechner schon.
 
-Und ja, einige sagen  "ist doch klar" - hast Du die `.ssh/config` gepflegt. Ja das habe ich. wahrscheinlich dein Schlüssel versuch mal per ssh -vvv herauszufinden was los ist.
+Und ja, einige sagen  "ist doch klar" - hast Du die `.ssh/config` gepflegt. Ja das habe ich. wahrscheinlich dein Schlüssel versuch mal per ssh -vvv herauszufinden was los ist..
 
 Beispieleintrag aus der `.ssh/config`:
 ```
