@@ -13,7 +13,7 @@ tags:
   - de
   - schema
 permalink: /:year/:month/:day/:title:output_ext
-published: false
+published: true
 ---
 
 ## Das Problem: JSON-Schema für Helm nicht mehr händisch schreiben und pflegen!
@@ -48,10 +48,13 @@ jobs:
           git-commit-message: "chore: update values.schema.json"
 ```
 
-Hier wird bei jedem `push` auf den `main`-Branch das Projekt ausgecheckt und aktuell nur die `values.yaml` verarbeitet. Die verwendete GitHub-Action unterstützt noch wesentlich mehr Spielarten, das Ganze ist hier bewusst einfach gehalten. Die erstellte `values.schema.json`wird dann mittels `git-push: true`commited. Denkt dabei bitte daran das der `commit` aus der Action auch die Berechtigung benötigt.  Schaut einfach mal in Eurem Repo unter `Settings -> Code and automation -> Actions -> General` und dann im Bereich `Workflow-Permissions`. Hier sollte im einfachsten Fall einfach ein `Read and write permissionsWorkflows have read and write permissions in the repository for all scopes.`ausgewählt sein.
+Hier wird bei jedem `push` auf den `main`-Branch das Projekt ausgecheckt und aktuell nur die `values.yaml` verarbeitet. Die verwendete GitHub-Action unterstützt noch wesentlich mehr Spielarten, das Ganze ist hier bewusst einfach gehalten. Die erstellte `values.schema.json`wird dann mittels `git-push: true`commited. Denkt dabei bitte daran das der `commit` aus der Action auch die Berechtigung benötigt.  Schaut einfach mal in Eurem Repo unter `Settings -> Code and automation -> Actions -> General` und dann im Bereich `Workflow-Permissions`. 
+
+![[gh-workflow-settings.png]]
+Hier sollte im einfachsten Fall einfach ein `Read and write permissionsWorkflows have read and write permissions in the repository for all scopes.`ausgewählt sein.
 
 ## Mehr Magie in der values.yaml
-Die erstellte `values.schema.json` ist recht generisch. Tolle Features wie die Werteliste `Always, Never, IfNotPresent` bei der `pullPolicy` aus dem letzten Posting sucht man vergebens. Hier können wir mit einem einfachen Trick nachschärfen.
+Die erstellte `values.schema.json` ist recht generisch. Tolle Features wie die Werteliste `Always, Never, IfNotPresent` bei der `pullPolicy` aus dem [letzten Post](https://zahlenhelfer.github.io/2025/05/02/JSONSchemaForTheHelp.html)  sucht man vergebens. Hier können wir mit einem einfachen Trick nachschärfen.
 
 ```yaml
 image:
@@ -59,5 +62,7 @@ image:
   pullPolicy: IfNotPresent # @schema enum: [IfNotPresent, Always, Never]
 ```
 
-Direkt hinter der jeweiligen Wertzuweisung wird per `#`ein Kommentar erstellt. Die Annotation `@schema enum: [IfNotPresent, Always, Never]` weist dann entsprechend die Werte zu.
+Direkt hinter der jeweiligen Wertzuweisung wird per `#` ein Kommentar erstellt. 
+Die Annotation `@schema enum: [IfNotPresent, Always, Never]` weist dann entsprechend gültige Werte zu. Bei dem Repository können wir einen regulären Ausdruck hinterlegen. Weitere Annotationen wie `maxLength` findest Du in der [Dokumentation](https://github.com/losisin/helm-values-schema-json/tree/main/docs) der [GitHub](https://github.com/losisin/helm-values-schema-json)-Projektes.
 ## Fazit
+Mit einer kleinen Automatisierung wird ganz automatisch eine lästige Pflegearbeit abgenommen. Sicherlich ist es immer noch nötig die `values.yaml` sinnvoll zu Annotieren, aber das sollte zu Dokumentationszwecken ja eh gemacht werden, oder?
