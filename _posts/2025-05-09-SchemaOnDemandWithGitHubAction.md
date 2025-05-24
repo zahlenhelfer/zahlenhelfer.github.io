@@ -50,7 +50,7 @@ jobs:
 
 Hier wird bei jedem `push` auf den `main`-Branch das Projekt ausgecheckt und aktuell nur die `values.yaml` verarbeitet. Die verwendete GitHub-Action unterstützt noch wesentlich mehr Spielarten, das Ganze ist hier bewusst einfach gehalten. Die erstellte `values.schema.json`wird dann mittels `git-push: true`commited. Denkt dabei bitte daran das der `commit` aus der Action auch die Berechtigung benötigt.  Schaut einfach mal in Eurem Repo unter `Settings -> Code and automation -> Actions -> General` und dann im Bereich `Workflow-Permissions`. 
 
-![Workflow Settings](assets/github-workflow-settings.png)
+![Workflow Settings](assets/gh-workflow-settings.png)
 
 Hier sollte im einfachsten Fall einfach ein `Read and write permissionsWorkflows have read and write permissions in the repository for all scopes.`ausgewählt sein.
 
