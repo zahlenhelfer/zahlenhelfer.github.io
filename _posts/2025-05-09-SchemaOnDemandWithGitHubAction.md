@@ -65,6 +65,6 @@ image:
 ```
 
 Direkt hinter der jeweiligen Wertzuweisung wird per `#` ein Kommentar erstellt. 
-Die Annotation `@schema enum: [IfNotPresent, Always, Never]` weist dann entsprechend gültige Werte zu. Bei dem Repository können wir einen regulären Ausdruck hinterlegen. Weitere Annotationen wie `maxLength` findest Du in der [Dokumentation](https://github.com/losisin/helm-values-schema-json/tree/main/docs) der [GitHub](https://github.com/losisin/helm-values-schema-json)-Projektes.
+Die Annotation `@schema enum: [IfNotPresent, Always, Never]` weist dann entsprechend gültige Werte zu. Bei dem Repository können wir einen regulären Ausdruck hinterlegen. Weitere Annotationen wie `maxLength` und mehr findest Du in der [Dokumentation](https://github.com/losisin/helm-values-schema-json/tree/main/docs) der [GitHub](https://github.com/losisin/helm-values-schema-json)-Projektes.
 ## Fazit
-Mit einer kleinen Automatisierung wird ganz automatisch eine lästige Pflegearbeit abgenommen. Sicherlich ist es immer noch nötig die `values.yaml` sinnvoll zu Annotieren, aber das sollte zu Dokumentationszwecken ja eh gemacht werden, oder?
+Mit einer kleinen Automatisierung wird eine lästige Pflegearbeit abgenommen. Sicherlich ist es immer noch nötig die `values.yaml` sinnvoll zu Annotieren, aber das sollte zu Dokumentationszwecken ja eh gemacht werden, oder?
