@@ -10,7 +10,7 @@ tags:
   - argocd
   - fehlermeldung
 permalink: /:year/:month/:day/:title:output_ext
-published: false
+published: true
 ---
 
 ## Das Problem: Größenbeschränkung (256kb) bei Kubernetes-Objekten (für Annotationen).
@@ -60,6 +60,7 @@ metadata:
 ```
 
 Zum Vergleich mit dem Argument `--server-side`.
+
 ```yaml
 apiVersion: apps/v1
 kind: Deployment
@@ -68,6 +69,7 @@ metadata:
     deployment.kubernetes.io/revision: "1"
   creationTimestamp: "2025-05-25T14:19:19Z"
 ```
+
 Zum selber Testen:
 - Erst die Ressource wieder löschen
 	`kubectl delete -f deployment.yaml`
@@ -90,11 +92,9 @@ spec:
     - ServerSideApply=true
 ```
 
-
-
 ## Fazit:
-- Kubernetes Ressourcen haben Limits.
-- `last-applied-configuration` beschleunigt die Vergrösserung
-- Client Side Apply fügt die Annotation `last-applied-configuration` in Objekte von Kubernetes hinzu (default bei `kubectl apply`) - Server Side Apply tut dies nicht
+- Kubernetes Ressourcen haben Limits (256kb).
+- Die Annotation `last-applied-configuration` beschleunigt die Vergrösserung von Ressourcen
+- bei `kubectl apply` das Argument `--server-side` nutzen
 - in ArgoCD `syncOptions` nutzen
 

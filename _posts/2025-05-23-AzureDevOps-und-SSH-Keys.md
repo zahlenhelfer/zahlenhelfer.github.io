@@ -20,16 +20,17 @@ remote: Public key authentication failed.
 fatal: Could not read from remote repository.
 ```
 
-Das Spannede ist die Konstellation. Auf meinem Arbeitsrechner bekomme ich die Fehlermeldung nicht, auf meinem HomeOffice-Rechner schon.
+Das Spannende ist die Konstellation. Auf meinem Arbeitsrechner bekomme ich die Fehlermeldung nicht, auf meinem HomeOffice-Rechner schon.
 
-Und ja, einige sagen  "ist doch klar" - hast Du die `.ssh/config` gepflegt. Ja das habe ich. wahrscheinlich dein Schlüssel versuch mal per ssh -vvv herauszufinden was los ist..
-
+Und ja, einige sagen  "ist doch klar" - hast Du die `.ssh/config` gepflegt. Ja das habe ich. Wahrscheinlich dein Schlüssel. 
 Beispieleintrag aus der `.ssh/config`:
 ```
 Host ssh.dev.azure.com
   HostName ssh.dev.azure.com
   IdentityFile ~/.ssh/key_for_work
 ```
+
+Versuchen wir also mal per `ssh -vvv ssh.dev.azure.com` herauszufinden was los ist..
 
 https://learn.microsoft.com/en-us/azure/devops/repos/git/use-ssh-keys-to-authenticate?view=azure-devops#set-up-ssh-key-authentication
 To generate key files using the RSA algorithm supported by Azure DevOps (either RSA-SHA2-256 or RSA-SHA2-512), run one of the following commands from a PowerShell or another shell such as `bash` on your client
@@ -88,5 +89,6 @@ IdentitiesOnly yes
 - ssh -vvv kann helfen.
 - unterstützten Cypher überprüfen
 - SSH-Config pflegen
+- notfalls einmal das FAQ von Microsoft befragen
 
-Diesmal war es kein ToolTip sondern eher was für den Alltag. Ich hoffe es hat trotzdem etwas geholfen.
+Diesmal war es kein Tool-Tip, sondern eher was aus dem IT-Alltag. Ich hoffe es hat trotzdem etwas geholfen.
