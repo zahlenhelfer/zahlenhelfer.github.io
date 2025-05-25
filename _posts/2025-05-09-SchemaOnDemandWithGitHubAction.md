@@ -27,7 +27,7 @@ Hier sei das GitHub-Projekt [helm-values-schema-json](https://github.com/losisin
 ## Ein Beispiel:  Schema Generierung per GitHub-Action
 Aber als erstes erstmal den GitHub-Workflow im Projekt erstellen (`.github/workflows/helm-json-values.yaml`)
 
-```
+{% raw %}```
 name: Generate values schema json
 on:
   push:
@@ -47,13 +47,13 @@ jobs:
           input: values.yaml
           git-push: true
           git-commit-message: "chore: update values.schema.json"
-```
+```{% endraw %}
 
-Hier wird bei jedem `push` auf den `main`-Branch das Projekt ausgecheckt und aktuell nur die `values.yaml` verarbeitet. Die verwendete GitHub-Action unterstützt noch wesentlich mehr Spielarten, das Ganze ist hier bewusst einfach gehalten. Die erstellte `values.schema.json`wird dann mittels `git-push: true`commited. Denkt dabei bitte daran das der `commit` aus der Action auch die Berechtigung benötigt.  Schaut einfach mal in Eurem Repo unter `Settings -> Code and automation -> Actions -> General` und dann im Bereich `Workflow-Permissions`. 
+Hier wird bei jedem `push` auf den `main`-Branch das Projekt ausgecheckt und aktuell nur die `values.yaml` verarbeitet. Die verwendete GitHub-Action unterstützt noch wesentlich mehr Spielarten, das Ganze ist hier bewusst einfach gehalten. Die erstellte `values.schema.json`wird dann mittels `git-push: true`commited. Denkt dabei bitte daran das der `commit` aus der Action auch die Berechtigung benötigt.  Schaut einfach mal in Eurem Repo unter `Settings -> Code and automation -> Actions -> General` und dann im Bereich `Workflow-Permissions`.
 
 ![GitHub-Settings](assets/images/gh-workflow-settings.png)
 
-Hier sollte im einfachsten Fall einfach ein `Read and write permissionsWorkflows have read and write permissions in the repository for all scopes.`ausgewählt sein.
+Hier sollte im einfachsten Fall einfach ein `Read and write permissions` ausgewählt sein.
 
 ## Mehr Magie in der values.yaml
 Die erstellte `values.schema.json` ist recht generisch. Tolle Features wie die Werteliste `Always, Never, IfNotPresent` bei der `pullPolicy` aus dem [letzten Post](https://zahlenhelfer.github.io/2025/05/02/JSONSchemaForTheHelp.html)  sucht man vergebens. Hier können wir mit einem einfachen Trick nachschärfen.
