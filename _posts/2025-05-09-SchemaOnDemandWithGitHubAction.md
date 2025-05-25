@@ -1,6 +1,5 @@
 ---
 layout: post
-render_with_liquid: false
 title: JSON-Schema für Helm-Charts automatisch per GitHub-Actions erstellen
 category: kubernetes
 tags:
@@ -15,6 +14,7 @@ tags:
   - schema
 permalink: /:year/:month/:day/:title:output_ext
 published: true
+render_with_liquid: "false"
 ---
 
 ## Das Problem: JSON-Schema für Helm nicht mehr händisch schreiben und pflegen!
