@@ -27,7 +27,8 @@ Hier sei das GitHub-Projekt [helm-values-schema-json](https://github.com/losisin
 ## Ein Beispiel:  Schema Generierung per GitHub-Action
 Aber als erstes erstmal den GitHub-Workflow im Projekt erstellen (`.github/workflows/helm-json-values.yaml`)
 
-{% raw %}```
+{% raw %}
+```yaml
 name: Generate values schema json
 on:
   push:
@@ -47,7 +48,8 @@ jobs:
           input: values.yaml
           git-push: true
           git-commit-message: "chore: update values.schema.json"
-```{% endraw %}
+```
+{% endraw %}
 
 Hier wird bei jedem `push` auf den `main`-Branch das Projekt ausgecheckt und aktuell nur die `values.yaml` verarbeitet. Die verwendete GitHub-Action unterstützt noch wesentlich mehr Spielarten, das Ganze ist hier bewusst einfach gehalten. Die erstellte `values.schema.json`wird dann mittels `git-push: true`commited. Denkt dabei bitte daran das der `commit` aus der Action auch die Berechtigung benötigt.  Schaut einfach mal in Eurem Repo unter `Settings -> Code and automation -> Actions -> General` und dann im Bereich `Workflow-Permissions`.
 
