@@ -14,6 +14,7 @@ tags:
   - schema
 permalink: /:year/:month/:day/:title:output_ext
 published: true
+render_with_liquid: "false"
 ---
 
 ## Das Problem: JSON-Schema für Helm nicht mehr händisch schreiben und pflegen!
