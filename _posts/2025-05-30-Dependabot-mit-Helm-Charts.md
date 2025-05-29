@@ -19,14 +19,20 @@ render_with_liquid: "false"
 Sicherlich nutzen viele von Euch Umbrella-Chart als Pattern für eure Helm-Charts. Immer wieder stellt sich da die Frage: "Wie bekomme ich Updates bei meinen Helm-Chart dependencies mit?"
 
 ## Die Lösung: automatische PRs bei Helm-Chart updates
-Seit April
-
-
-Hier sei das GitHub-Projekt [helm-values-schema-json](https://github.com/losisin/helm-values-schema-json/tree/main) genannt. Dort gibt es  für für die Kommandozeile ein Tool.  Aber noch schöner ist die GitHub-Action, die das ganze dann noch bequemer erledigt. Ob Du also einen PreCommit-Hook nutzt oder entspannt dem GitHub-Runner die Arbeit überlässt,  Du tust deiner Chart Qualität etwas gutes. Das Tool liest dabei die `values.yaml` aus und erstellt ein entsprechendes JSON-Schema. Wenn Du dabei auch noch Annotationen in der `values.yaml` hinzufügst, wird es noch magischer! Lass uns schauen wie es funktionier.
+Seit April wurde ein [GitHub-Feature](https://github.com/dependabot/dependabot-core/issues/2237) für Dependabot fertig gestellt, dass für uns sehr hilfreich ist. Dependabot hat nun Unterstützung für Helm-Charts.
 
 ## Ein Beispiel:  Automatische PR bei Updates per Dependabot
-Aber als erstes erstmal den GitHub-Workflow im Projekt erstellen (`.github/dependabot.yaml`)
+Als erstes erstmal den GitHub-Workflow im Projekt erstellen (`.github/dependabot.yaml`)
 
+Hier wird bei jedem `push` auf den `main`-Branch das Projekt ausgecheckt und aktuell nur die `values.yaml` verarbeitet. Die verwendete GitHub-Action unterstützt noch wesentlich mehr Spielarten, das Ganze ist hier bewusst einfach gehalten. Die erstellte `values.schema.json`wird dann mittels `git-push: true`commited. Denkt dabei bitte daran das der `commit` aus der Action auch die Berechtigung benötigt.  Schaut einfach mal in Eurem Repo unter `Settings -> Security`.
+
+![GitHub-Security Settings](assets/images/gh-adv-security.png)
+
+Auf der Seite suchst Du nach dem Eintrag `Dependabot version updates` und bestätigst mit `Configure`
+
+![Dependabot Settings](assets/images/gh-dependabot-version.png)
+
+In der folgenden `dependabot.yml`
 ```yaml
 version: 2
 updates:
@@ -38,12 +44,6 @@ updates:
     schedule:
       interval: "weekly"
 ```
-
-Hier wird bei jedem `push` auf den `main`-Branch das Projekt ausgecheckt und aktuell nur die `values.yaml` verarbeitet. Die verwendete GitHub-Action unterstützt noch wesentlich mehr Spielarten, das Ganze ist hier bewusst einfach gehalten. Die erstellte `values.schema.json`wird dann mittels `git-push: true`commited. Denkt dabei bitte daran das der `commit` aus der Action auch die Berechtigung benötigt.  Schaut einfach mal in Eurem Repo unter `Settings -> Code and automation -> Actions -> General` und dann im Bereich `Workflow-Permissions`.
-
-![GitHub-Settings](assets/images/gh-workflow-settings.png)
-
-Hier sollte im einfachsten Fall einfach ein `Read and write permissions` ausgewählt sein.
 
 ## Mehr Magie in der values.yaml
 Die erstellte `values.schema.json` ist recht generisch. Tolle Features wie die Werteliste `Always, Never, IfNotPresent` bei der `pullPolicy` aus dem [letzten Post](https://zahlenhelfer.github.io/2025/05/02/JSONSchemaForTheHelp.html)  sucht man vergebens. Hier können wir mit einem einfachen Trick nachschärfen.
