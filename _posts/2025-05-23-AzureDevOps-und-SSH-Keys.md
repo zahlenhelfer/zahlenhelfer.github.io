@@ -86,7 +86,7 @@ IdentitiesOnly yes
 
 ```
 ## Fazit:
-- ssh -vvv kann helfen.
+- `ssh -vvv kann` helfen.
 - unterstützten Cypher überprüfen
 - SSH-Config pflegen
 - notfalls einmal das FAQ von Microsoft befragen
