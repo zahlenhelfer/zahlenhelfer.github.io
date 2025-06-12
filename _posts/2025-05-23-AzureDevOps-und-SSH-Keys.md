@@ -9,7 +9,7 @@ tags:
   - ssh
   - azuredevops
 permalink: /:year/:month/:day/:title:output_ext
-published: false
+published: true
 ---
 
 ## Das Problem: `remote: Public key authentication failed.`
@@ -20,9 +20,9 @@ remote: Public key authentication failed.
 fatal: Could not read from remote repository.
 ```
 
-Das Spannende ist die Konstellation. Auf meinem Arbeitsrechner bekomme ich die Fehlermeldung nicht, auf meinem HomeOffice-Rechner schon.
+Das Spannende ist dabei die Konstellation wann der Fehler auftritt. Auf meinem Arbeitsrechner bekomme ich die Fehlermeldung nicht, auf meinem HomeOffice-Rechner schon.
 
-Und ja, einige sagen  "ist doch klar" - hast Du die `.ssh/config` gepflegt. Ja das habe ich. Wahrscheinlich dein Schlüssel. 
+Und ja, einige sagen  "ist doch klar" - hast Du die `.ssh/config` gepflegt. Ja das habe ich. - Wahrscheinlich ist dein Schlüssel falsch. Nein ist er nicht.
 Beispieleintrag aus der `.ssh/config`:
 ```
 Host ssh.dev.azure.com
@@ -30,65 +30,23 @@ Host ssh.dev.azure.com
   IdentityFile ~/.ssh/key_for_work
 ```
 
-Versuchen wir also mal per `ssh -vvv ssh.dev.azure.com` herauszufinden was los ist..
+Versuchen wir also mal per `ssh -vvv -T ssh.dev.azure.com` herauszufinden was los ist.
 
-https://learn.microsoft.com/en-us/azure/devops/repos/git/use-ssh-keys-to-authenticate?view=azure-devops#set-up-ssh-key-authentication
-To generate key files using the RSA algorithm supported by Azure DevOps (either RSA-SHA2-256 or RSA-SHA2-512), run one of the following commands from a PowerShell or another shell such as `bash` on your client
+Ist es der Algorythmus? Nein, obwohl AzureDevOps da schon etwas pingelig ist: `RSA-SHA2-256` oder `RSA-SHA2-512`sind [supported](https://learn.microsoft.com/en-us/azure/devops/repos/git/use-ssh-keys-to-authenticate?view=azure-devops#set-up-ssh-key-authentication)
 
-https://learn.microsoft.com/en-us/azure/devops/repos/git/use-ssh-keys-to-authenticate?view=azure-devops#q-i-have-multiple-ssh-keys-how-do-i-use-the-correct-ssh-key-for-azure-devops
-
-`ssh-keygen -t rsa-sha2-512`
-
+## Die Lösung: `IdentitiesOnly yes` bzw.  RTFM
+Die FAQ von Microsoft brachte doch tatsächlich die Lösung. [Hier](https://learn.microsoft.com/en-us/azure/devops/repos/git/use-ssh-keys-to-authenticate?view=azure-devops#q-how-can-i-use-a-nondefault-key-location-that-is-not-sshid_rsa-and-sshid_rsapub) stand geschrieben, das nur 1 Schlüssel angeboten werden darf und auch nur der erste geprüft wird.  Der wichtige Teil für meine `.sshconfig` war dann die letzte Zeile:
 ```
-ssh -T git@ssh.dev.azure.com
-```
-
-### Q: How can I use a nondefault key location, that is, not ~/.ssh/id_rsa and ~/.ssh/id_rsa.pub?
-
-**A:** To use a key stored in a different place than the default, perform these two tasks:
-
-1. The keys must be in a folder that only you can read or edit. If the folder has wider permissions, SSH doesn't use the keys.
-    
-2. You must let SSH know the location of the key, for example, by specifying it as an "Identity" in the SSH config:
-    
-    Copy
-    
-    ```
-    Host ssh.dev.azure.com
-      IdentityFile ~/.ssh/id_rsa_azure
-      IdentitiesOnly yes
-    ```
-    
-
-The `IdentitiesOnly yes` setting ensures that SSH doesn't use any other available identity to authenticate. This setting is particular important if more than one identity is available.
-
-[](https://learn.microsoft.com/en-us/azure/devops/repos/git/use-ssh-keys-to-authenticate?view=azure-devops#q-i-have-multiple-ssh-keys-how-do-i-use-the-correct-ssh-key-for-azure-devops)
-
-### Q: I have multiple SSH keys. How do I use the correct SSH key for Azure DevOps?
-
-**A:** Generally, when you configure multiple keys for an SSH client, the client attempts to authenticate with each key sequentially until the SSH server accepts one.
-
-However, this approach doesn't work with Azure DevOps due to technical constraints related to the SSH protocol and the structure of our Git SSH URLs. Azure DevOps accepts the first key provided by the client during authentication. If this key is invalid for the requested repository, the request fails without attempting any other available keys, resulting in the following error:
-
-Copy
-
-```
-remote: Public key authentication failed.
-fatal: Could not read from remote repository.
+Host ssh.dev.azure.com
+  IdentityFile ~/.ssh/id_rsa_azure
+  IdentitiesOnly yes
 ```
 
-For Azure DevOps, you need to configure SSH to explicitly use a specific key file. The procedure is the same as when using a key stored in a [nondefault location](https://learn.microsoft.com/en-us/azure/devops/repos/git/use-ssh-keys-to-authenticate?view=azure-devops#non-default-keys). Tell SSH to use the correct SSH key for the Azure DevOps host.
-
-[](https://learn.microsoft.com/en-us/azure/devops/repos/git/use-ssh-keys-to-authenticate?view=azure-devops#q-how-do-i-use-different-ssh-keys-for-different-organizations-on-azure-devops)
-```
-
-IdentitiesOnly yes
-
-```
+Die Einstellung `IdentitiesOnly yes` stellt sicher, dass SSH keine andere verfügbare Identität zur Authentifizierung verwendet. Diese Einstellung ist besonders wichtig, wenn mehr als eine Identität verfügbar ist.
 ## Fazit:
-- `ssh -vvv kann` helfen.
+- `ssh -vvv bzw. -T kann` helfen.
 - unterstützten Cypher überprüfen
 - SSH-Config pflegen
-- notfalls einmal das FAQ von Microsoft befragen
+- notfalls einmal das [FAQ](https://learn.microsoft.com/en-us/azure/devops/repos/git/use-ssh-keys-to-authenticate?view=azure-devops#set-up-ssh-key-authentication) von Microsoft befragen
 
 Diesmal war es kein Tool-Tip, sondern eher was aus dem IT-Alltag. Ich hoffe es hat trotzdem etwas geholfen.
