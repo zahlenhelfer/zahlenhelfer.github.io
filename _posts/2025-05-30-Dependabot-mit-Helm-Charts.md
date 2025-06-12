@@ -11,7 +11,7 @@ tags:
   - de
   - dependabot
 permalink: /:year/:month/:day/:title:output_ext
-published: false
+published: true
 render_with_liquid: "false"
 ---
 
@@ -22,9 +22,7 @@ Sicherlich nutzen viele von Euch Umbrella-Chart als Pattern für eure Helm-Chart
 Seit April wurde ein [GitHub-Feature](https://github.com/dependabot/dependabot-core/issues/2237) für Dependabot fertig gestellt, dass für uns sehr hilfreich ist. Dependabot hat nun Unterstützung für Helm-Charts.
 
 ## Ein Beispiel:  Automatische PR bei Updates per Dependabot
-Als erstes erstmal den GitHub-Workflow im Projekt erstellen (`.github/dependabot.yaml`)
-
-Hier wird bei jedem `push` auf den `main`-Branch das Projekt ausgecheckt und aktuell nur die `values.yaml` verarbeitet. Die verwendete GitHub-Action unterstützt noch wesentlich mehr Spielarten, das Ganze ist hier bewusst einfach gehalten. Die erstellte `values.schema.json`wird dann mittels `git-push: true`commited. Denkt dabei bitte daran das der `commit` aus der Action auch die Berechtigung benötigt.  Schaut einfach mal in Eurem Repo unter `Settings -> Security`.
+Als erstes die GitHub-Setting des Repos aufrufen. Nun suchst Du in der Leiste nach `Settings -> Security-> Advanced Security`.
 
 ![GitHub-Security Settings](assets/images/gh-adv-security.png)
 
@@ -32,7 +30,7 @@ Auf der Seite suchst Du nach dem Eintrag `Dependabot version updates` und bestä
 
 ![Dependabot Settings](assets/images/gh-dependabot-version.png)
 
-Jetzt öffnet sich der GitHub-Editor und Du kann die folgenden Zeilen in die `dependabot.yml` übertragen.
+Jetzt öffnet sich der GitHub-Editor und Du kannst die folgenden Zeilen in die `dependabot.yml` Datei übertragen.
 ```yaml
 version: 2
 updates:
@@ -45,6 +43,8 @@ updates:
       interval: "weekly"
 ```
 
-regulären Ausdruck hinterlegen. Weitere Annotationen wie `maxLength` und mehr findest Du in der [Dokumentation](https://github.com/losisin/helm-values-schema-json/tree/main/docs) der [GitHub](https://github.com/losisin/helm-values-schema-json)-Projektes.
+Jetzt werden wöchentlich deine Chartabhänigkeiten geprüft und falls nötig ein PR mit dem Update erstellt.
 ## Fazit
-Mit einer kleinen Automatisierung wird eine lästige Pflegearbeit abgenommen. Sicherlich ist es immer noch nötig die `values.yaml` sinnvoll zu Annotieren, aber das sollte zu Dokumentationszwecken ja eh gemacht werden, oder?
+- fire-and-forget Einstellung
+- durch Pullrequests nicht invasiv und steuerbar
+- wäre aber auch mit Tools wie [renovate](https://www.mend.io/renovate/) darstellbar
