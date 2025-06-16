@@ -68,6 +68,6 @@ Aber ein minimales Verständnis vorab für die Dinge kann nicht Schaden:
     
 - **Aktualisierung & Community**  
     Das Kompendium erscheint jährlich (z. B. Edition 2023 mit 111 Bausteinen) und beinhaltet Community-Drafts sowie nutzererstellte Bausteine [bsi.bund.de+6bsi.bund.de+6bsi.bund.de+6](https://www.bsi.bund.de/DE/Themen/Unternehmen-und-Organisationen/Standards-und-Zertifizierung/IT-Grundschutz/IT-Grundschutz-Kompendium/it-grundschutz-kompendium_node.html?utm_source=chatgpt.com).
-    
+
 - **Umsetzungshinweise**  
     Zu vielen Bausteinen gibt es vertiefende Hinweise zur konkreten Umsetzung der empfohlenen Maßnahmen [it-grundschutzkompendium.de+3bsi.bund.de+3tenfold-security.com+3](https://www.bsi.bund.de/DE/Themen/Unternehmen-und-Organisationen/Standards-und-Zertifizierung/IT-Grundschutz/IT-Grundschutz-Kompendium/it-grundschutz-kompendium_node.html?utm_source=chatgpt.com).
