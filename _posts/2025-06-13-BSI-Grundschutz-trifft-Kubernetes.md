@@ -9,21 +9,19 @@ tags:
   - grundschutz
   - kubernetes
 permalink: /:year/:month/:day/:title:output_ext
-published: false
+published: true
 render_with_liquid: "false"
 ---
 
 ## BSI Grundschutz und Kubernetes - passt das zusammen? - Erfahrungen aus der Praxis
 
-Das IT-Grundschutzkompendium befasst sich auch mit Kubernetes. Die Damen und Herren des BSI haben dem Produkt "IT‑Grundschutz‑Bausteine" sogar einen eigenen Baustein gewidmet - [APP.4.4 Kubernetes](https://www.bsi.bund.de/SharedDocs/Downloads/DE/BSI/Grundschutz/IT-GS-Kompendium_Einzel_PDFs_2022/06_APP_Anwendungen/APP_4_4_Kubernetes_Edition_2022.pdf?__blob=publicationFile&v=3). Ich möchte in dieser kleinen Serie gerade die Bausteine beleuchten und mögliche Implementierungen aufzeigen.
+Das IT-Grundschutzkompendium befasst sich auch mit Kubernetes. Die Damen und Herren des BSI haben dem Produkt "IT‑Grundschutz‑Bausteine" sogar einen eigenen Baustein gewidmet - [APP.4.4 Kubernetes](https://www.bsi.bund.de/SharedDocs/Downloads/DE/BSI/Grundschutz/IT-GS-Kompendium_Einzel_PDFs_2022/06_APP_Anwendungen/APP_4_4_Kubernetes_Edition_2022.pdf?__blob=publicationFile&v=3). Ich möchte in dieser kleinen Serie gerade die __Bausteine__ beleuchten und mögliche Implementierungen aufzeigen.
 
 >DISCLAIMER: Ich bin weder Auditor noch Anwalt - daher keine Gewähr!
 
-Bevor ich jetzt die 3.242te-Einführung in den IT-Grundschutz mache, gehen wir in dieser Serie die Bausteine einfach durch. 
-
-Aber ein minimales Verständnis vorab für die Dinge kann nicht Schaden:
+Ich möchte keine erneute Einführung in den IT-Grundschutz geben, aber ein minimales Verständnis für die Dinge kann nicht Schaden.
 - Die BSI-Standards 200-1 bis 200-4
-- Das IT-Grundschutz-Kompendium insb. die IT‑Grundschutz‑Bausteine
+- Das IT-Grundschutz-Kompendium mit den IT‑Grundschutz‑Bausteinen
 
 ### BSI‑Standard 200‑1 oder "Was muss ich tun"
 
@@ -53,21 +51,4 @@ Aber ein minimales Verständnis vorab für die Dinge kann nicht Schaden:
 ### IT-Grundschutz-Bausteine
 - Die IT‑Grundschutz‑Bausteine sind ein strukturiertes, praxisnahes und umfassendes Baukastensystem zur ganzheitlichen Informationssicherheit – modular, regelmäßig aktualisiert und mit umsetzungsstarken Leitfäden.
 
-### Struktur der IT-Grundschutz-Bausteine
-- **Definition & Ziel**  
-    Die Bausteine bilden das Kernstück des IT‑Grundschutz-Kompendiums und enthalten Anforderungen sowie Empfehlungen zu Sicherheit für IT-Systeme, Prozesse, Netze, Gebäude und Anwendungen [bsi.bund.de+15bsi.bund.de+15bsi.bund.de+15](https://www.bsi.bund.de/DE/Themen/Unternehmen-und-Organisationen/Standards-und-Zertifizierung/IT-Grundschutz/IT-Grundschutz-Kompendium/IT-Grundschutz-Bausteine/Bausteine_Download_Edition_node.html?utm_source=chatgpt.com).
-    
-- **Struktur & Aufbau**  
-    Sie sind modular aufgebaut und folgen einem einheitlichen Schema mit Beschreibung, Gefährdungen und drei Anforderungsklassen: Basis, Standard, erhöhter Schutzbedarf [bsi.bund.de+1tenfold-security.com+1](https://www.bsi.bund.de/DE/Themen/Unternehmen-und-Organisationen/Standards-und-Zertifizierung/IT-Grundschutz/Zertifizierte-Informationssicherheit/IT-Grundschutzschulung/Online-Kurs-IT-Grundschutz/Lektion_5_Modellierung/Lektion_5_01/Lektion_5_01_node.html?utm_source=chatgpt.com).
-    
-- **Schichtenmodell**  
-    Es gibt zehn thematische Schichten: ISMS (Sicherheitsmanagement), ORP (Organisation & Personal), CON (Konzeption), OPS (Betrieb), DER (Detektion/Reaktion), APP (Anwendungen), SYS (Systeme), IND (industrielle IT), NET (Netze) und INF (Infrastruktur) [ausbildung-in-der-it.de+8bsi.bund.de+8tenfold-security.com+8](https://www.bsi.bund.de/DE/Themen/Unternehmen-und-Organisationen/Standards-und-Zertifizierung/IT-Grundschutz/IT-Grundschutz-Kompendium/it-grundschutz-kompendium_node.html?utm_source=chatgpt.com).
-    
-- **Reduzierter Analyseaufwand**  
-    Durch vordefinierte Risiken und empfohlene Maßnahmen entfällt oft eine individuelle Risikoanalyse – ein Soll‑Ist‑Abgleich genügt meist [tenfold-security.com](https://www.tenfold-security.com/bsi-it-grundschutz/?utm_source=chatgpt.com).
-    
-- **Aktualisierung & Community**  
-    Das Kompendium erscheint jährlich (z. B. Edition 2023 mit 111 Bausteinen) und beinhaltet Community-Drafts sowie nutzererstellte Bausteine [bsi.bund.de+6bsi.bund.de+6bsi.bund.de+6](https://www.bsi.bund.de/DE/Themen/Unternehmen-und-Organisationen/Standards-und-Zertifizierung/IT-Grundschutz/IT-Grundschutz-Kompendium/it-grundschutz-kompendium_node.html?utm_source=chatgpt.com).
-
-- **Umsetzungshinweise**  
-    Zu vielen Bausteinen gibt es vertiefende Hinweise zur konkreten Umsetzung der empfohlenen Maßnahmen [it-grundschutzkompendium.de+3bsi.bund.de+3tenfold-security.com+3](https://www.bsi.bund.de/DE/Themen/Unternehmen-und-Organisationen/Standards-und-Zertifizierung/IT-Grundschutz/IT-Grundschutz-Kompendium/it-grundschutz-kompendium_node.html?utm_source=chatgpt.com).
+Gerade die Bausteine sind aus der Sicht der Technik bzw. den Engineers ein wichtiges Thema. Genau diese Bausteine werden in den nächsten Blog-Posts einzeln beleuchtet und mit konkreten Implementierungen für Kubernetes versehen.

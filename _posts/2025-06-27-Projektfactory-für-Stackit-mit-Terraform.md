@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Projektfactory mit Terraform für die STACKIT Cloud erstellen
+title: Eine Projektfactory mit Terraform für die STACKIT Cloud erstellen
 category: terraform
 tags:
   - blog
