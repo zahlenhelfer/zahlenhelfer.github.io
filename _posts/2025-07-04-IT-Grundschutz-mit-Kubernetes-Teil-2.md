@@ -27,7 +27,7 @@ Nehmen wir den Text Absatz für Absatz auseinander
 
 Unsere Anwendung wird auf jeden Fall einen eigenen `Namespace`bekommen. Das kannst Du entweder als eigene `Ressource`in deinen Manifestdateien vorsehen oder Falls Du `Helm`-Charts nutzt, dort auch explizit festlegen. 
 
-Eine solche Anforderung sollte natürlich auch sicher gestellt werden. Dafür könnten wir die Kubernetes Manifeste scannen, oder das Policy Tool [Kyverno](https://kyverno.io/) einsetzen. Hier könnten wir mit der Policy [disallow-default-namespace](https://kyverno.io/policies/best-practices/disallow-default-namespace/disallow-default-namespace/) arbeiten um das anlegen von Kubernetes-Ressourcen im `default`-Namespace zu verhindern.
+Eine solche Anforderung sollte natürlich auch sicher gestellt werden. Dafür könnten wir die Kubernetes Manifeste scannen, oder das Policy Tool [Kyverno](https://kyverno.io/) einsetzen. Hier könnten wir mit der Policy [disallow-default-namespace](https://kyverno.io/policies/best-practices/disallow-default-namespace/disallow-default-namespace/) arbeiten um das Anlegen von Kubernetes-Ressourcen im `default`-Namespace zu verhindern.
 
 >Die Planung MUSS Regelungen zu Netz-, CPU- und Festspeicherseparierung enthalten. Die Separierung SOLLTE auch das Netzzonenkonzept und den Schutzbedarf beachten und auf diese abgestimmt sein.
 
@@ -35,4 +35,4 @@ In diesem Absatz sind gleich zwei Dinge enthalten. TODO
 
 >Anwendungen SOLLTEN jeweils in einem eigenen Kubernetes-Namespace laufen, der alle Programme der Anwendung umfasst. Nur Anwendungen mit ähnlichem Schutzbedarf und ähnlichen möglichen Angriffsvektoren SOLLTEN einen Kubernetes-Cluster teilen.
 
-Hier wird es hart bzw. kann bitter werden. Entweder werden für unterschiedliche Cluster 
+Hier wird es hart. Für Anwendungen mit ähnlichem Schutzbedard darf ein Cluster genutzt werden. Kommt n
