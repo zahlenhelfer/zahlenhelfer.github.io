@@ -35,4 +35,4 @@ In diesem Absatz sind gleich zwei Dinge enthalten. TODO
 
 >Anwendungen SOLLTEN jeweils in einem eigenen Kubernetes-Namespace laufen, der alle Programme der Anwendung umfasst. Nur Anwendungen mit ähnlichem Schutzbedarf und ähnlichen möglichen Angriffsvektoren SOLLTEN einen Kubernetes-Cluster teilen.
 
-Hier wird es hart. Für Anwendungen mit ähnlichem Schutzbedard darf ein Cluster genutzt werden. Kommt n
+Hier wird es hart. Für Anwendungen mit ähnlichem Schutzbedard darf ein Cluster genutzt werden. Kommt nun eine Anwendung mit einem hohen Schutzbedarf sollte hier möglichst ein __eigener Cluster__ bereit gestellt werden.
