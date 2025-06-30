@@ -44,6 +44,10 @@ updates:
 ```
 
 Jetzt werden wöchentlich deine Chartabhänigkeiten geprüft und falls nötig ein PR mit dem Update erstellt.
+![Dependabot Settings](assets/images/gh-pr-dependabot.png)
+Nimmst Du diesen an, wird das Update ausgeführt und gemerged. 
+
+Viel Spass!
 ## Fazit
 - fire-and-forget Einstellung
 - durch Pullrequests nicht invasiv und steuerbar
