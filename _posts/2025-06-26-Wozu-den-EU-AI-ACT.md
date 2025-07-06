@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Wozu braucht es den EU AI Act?
-category: terraform
+category: compliance
 tags:
   - blog
   - de
@@ -14,26 +14,18 @@ render_with_liquid: "false"
 
 ## Der EU AI Act oder muss ich das wissen?
 
-Noch ein Gestzt? - Bitte nicht, oder ist es gar nicht so schlimm? Als Techie Nutzt oder Entwickelst Du KI, was heisst der EU AI Act jetzt für Dich oder das Unternehmen in dem Du tätig bist? 
+Noch ein Gesetzt? - Bitte nicht, oder ist es gar nicht so schlimm? Als Techie nutzt oder entwickelst Du KI. Was heisst der EU AI Act jetzt für Dich oder das Unternehmen in dem Du tätig bist? Ich versuche hier einmal das ganze möglichst kompakt zusammen zu fassen und zu ordnen.
 
-Der EU AI Act schafft einen einheitlichen Rahmen für die Entwicklung und Nutzung von Künstlicher Intelligenz in der EU. Er setzt Sicherheits- und Transparenzstandards, um sicherzustellen, dass KI-Systeme sicher und vertrauenswürdig sind und die Grundrechte der Bürger wahren. Das Gesetz fördert Innovation, minimiert Risiken und stärkt das Verbrauchervertrauen in KI-Technologien.
+>Der EU AI Act schafft einen einheitlichen Rahmen für die Entwicklung und Nutzung von Künstlicher Intelligenz in der EU. Er setzt Sicherheits- und Transparenzstandards, um sicherzustellen, dass KI-Systeme sicher und vertrauenswürdig sind und die Grundrechte der Bürger wahren. Das Gesetz fördert Innovation, minimiert Risiken und stärkt das Verbrauchervertrauen in KI-Technologien.
 
 ## TL;DR:
 - einheitlichen Rahmen bei Entwicklung und Nutzung von KI in der EU
 - stellt Sicherheits- und Transparenzstandards dar
 - fördert Innovation aber minimiert Risiken
 
->Wichtig: ich nutze OpenToFu, verwendest Du Terraform ist das kein Problem, einfach `alias tofu=terraform` und es sollte auch mit deinem `terraform` Binary funktionieren
+Der EU AI Act ist ein wichtiger Schritt zur Regulierung von Künstlicher Intelligenz (KI) in der Europäischen Union, mit dem Ziel, KI-Systeme sicherer und transparenter zu machen. Welche Akteure haben nun aber welchen Handlungsbedarf?
 
-1. Projekt erstellen (manuell)
-2. Service-Account erstellen (manuell)
-3. Bespiel: STACKIT Compute-Engine
-
-### Der EU AI Act: Handlungsbedarf und betroffene Gruppen
-
-Der EU AI Act ist ein wichtiger Schritt zur Regulierung von Künstlicher Intelligenz (KI) in der Europäischen Union, mit dem Ziel, KI-Systeme sicherer und transparenter zu machen. Doch was bedeutet das konkret für die verschiedenen Akteure?
-
-#### Betroffene Gruppen und Handlungsbedarf
+## Betroffene Gruppen und Handlungsbedarf
 
 - **Unternehmen und Entwickler**: Müssen sicherstellen, dass ihre KI-Systeme den neuen Sicherheits- und Transparenzanforderungen entsprechen. Dies umfasst Risikobewertungen, Dokumentationspflichten und Datensicherheitsmechanismen.
 

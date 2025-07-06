@@ -50,6 +50,5 @@ terraform {
 provider stackit{
 
 }
-
 ```
 In der `main.tf` wird festgelegt welche Terraform-Provider bzw. Module genutzt werden. Hier starten wir einfach mir dem aktuellen Provider also quasi Treiber für die STACKIT-Cloud. Dieser wird noch aktiv entwickelt, daher kann die aktuelle Version abweichen.
