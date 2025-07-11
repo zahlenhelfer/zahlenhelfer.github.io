@@ -14,7 +14,7 @@ render_with_liquid: "false"
 
 ## Der EU AI Act oder muss ich das wissen?
 
-Noch ein Gesetzt? - Bitte nicht, oder ist es gar nicht so schlimm? Als Techie nutzt oder entwickelst Du KI. Was heisst der EU AI Act jetzt für Dich oder das Unternehmen in dem Du tätig bist? Ich versuche hier einmal das ganze möglichst kompakt zusammen zu fassen und zu ordnen.
+Noch ein Gesetzt? - Bitte nicht, oder ist es gar nicht so schlimm? Als Techie nutzt oder entwickelst Du KI. Was heisst der "EU AI Act" jetzt für Dich oder das Unternehmen in dem Du tätig bist? Ich versuche hier einmal das ganze möglichst kompakt zusammen zu fassen und zu ordnen.
 
 >Der EU AI Act schafft einen einheitlichen Rahmen für die Entwicklung und Nutzung von Künstlicher Intelligenz in der EU. Er setzt Sicherheits- und Transparenzstandards, um sicherzustellen, dass KI-Systeme sicher und vertrauenswürdig sind und die Grundrechte der Bürger wahren. Das Gesetz fördert Innovation, minimiert Risiken und stärkt das Verbrauchervertrauen in KI-Technologien.
 

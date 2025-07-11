@@ -1,0 +1,32 @@
+---
+layout: post
+title: STACKIT Cloud X Summit 2025 - ein kurzer Bericht
+category: conference
+tags:
+  - blog
+  - de
+  - stackit
+  - konferenz
+permalink: /:year/:month/:day/:title:output_ext
+published: false
+render_with_liquid: "false"
+---
+
+## Heilbronn hat keine ICE Bahnhof - aber eine Cloud!
+
+Heidepark Soltau - Sonne und trotzdem Wolken, wenn auch nur Digital. Die [Cloudland](https://www.cloudland.org/de/rueckblicke/cloudland-2025/), hatte dieses Jahr Ihre Premiere was den Norden angeht. Das Abenteuerhotel ist gut temperiert, kein Frost aber auch keine Hitze. Nach dem Umzug vom Phantasialand geht es nun im Norden weiter.
+![CloudlandBadge2025](assets/images/blog_cloudlandbadge2025.jpg)
+
+## Tag 1
+Bevor es am Mittwoch mit dem klassischen Konferenzformat losgeht, heisst es am ersten Tag erstmal Barcamp. Nach einer kurzen Begrüssung und den "Regeln für keine Regeln" kamen die Session. Mein Kollege Bjarne war spontan mit dem Thema "Was können wir aus dem Compilerbau lernen" dabei.
+![BjarnesSessions](assets/images/blog_bjarnesession.jpg)
+Und ich durfte wieder einmal feststellen, dass Themen die nicht aus deiner Bubble sind auch extrem wertvoll sein können! Bjarne, Danke für die tollen Einblicke und das Update für mein "altes" Uni-Wissen in diesem Bereich.
+## Tag 2
+An diesem Tag war es einfach nur heiss - wer jetzt an die Sessions denkt - ja. Aber es war auch die Aussentemperatur. Ein Vortrag war für mich aber sehr wichtig [Artem Lajko](https://www.linkedin.com/in/lajko/) hat mit seinem Kollegen  [Alexander Hoeft](https://www.linkedin.com/in/alexander-h-2a9802347/) über das Thema "Internal Developer Platform: Was steckt dahinter und ist es nur ein Trend?" gesprochen. Ganz klar ein Highlight des Tages.
+## Tag 3
+Die Dinge auch mal ausprobieren - neben Besuchen bei Ausstellern wie der Bundesagentur für Arbeit oder der Datev gehörte aber auch das "DOING" dazu. Endlich einmal blinde Flecken beim Workshop "GitOps-Adventures: Flux mit Flagger und Istio–Progressive Kubernetes Deployments" schliessen.
+Aber auch der Vortrag inkl. Demos zum Thema "Getting Started with OpenTelemetry: A Gateway to Modern Observability" von [Juraci Paixão Kröhling](https://www.linkedin.com/in/jpkroehling/) war prima.
+## Tag 4
+Den perfekten Abschluss bietet für mich die Session von [Tim Urlaub](https://www.linkedin.com/in/t1murl/). Er hat den Talk "Reif Für Die Zukunft: The Key To Mature Platform Engineering" gehalten. Oder praktisch in Deutsch: Wie kann ich den Reifegrad meines Plattform-Teams messen und was tue ich damit. Das war eine super Leistung Tim!
+## Fazit
+Ich war erst nicht sicher, wie die Konferenz wird. Schliesslich war die DOAG - die Deutsche Oracle User Group, der Veranstalter. Es war nicht zu Gross, aber auch kein MeetUp. Ein grossen Anteil hatten die CloudNative Themen, Kubernetes und Observability. Es gäbe zu noch so vielen Vorträgen etwas zu schreiben, aber das wird zu viel. Fest steht: Ich komme gerne nächstes Jahr wieder!
