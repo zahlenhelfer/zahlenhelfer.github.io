@@ -14,29 +14,29 @@ render_with_liquid: "false"
 
 ## STACKIT Cloud X Summit - klingt "suverän" und ist es auch!
 
-> Merke: Heilbronn hat keinen ICE Bahnhof - aber eine suveräne Cloud!
+> Merke: Heilbronn hat keinen ICE Bahnhof - aber eine souveräne Cloud!
 ### TLDR;
 - ein voller Terminkalender -  mit vielen gute Sessions
 - echte Menschen und kein glatt gebügelter Event
-- das Gefühl: "Suveräne Cloud wird klappen - wenn wir es wollen"
+- das Gefühl: "Souveräne Cloud wird klappen - wenn wir es wollen"
 
 ![CloudlandBadge2025](assets/images/cloudx-logo.jpg)
 ### Vormittags - 7:30 Uhr und es geht los!
 Ab 7:30 Uhr ging die Akkreditierung los und ein Business-Breakfast mit ersten Kontakten. Hier war klar - maximal 5% Polos, 0% Hoodies, maximum Business Casual. Der BWLer in mir blühte auf, dem Tekki wurde mulmig.
 ### Keynote
-Eröffnet wurde mit einer Keynote von "Bernie", dem CEO der STACKIT. Er hatte natürlich Ankündigungen dabei, z.B. es gibt eine zweite Region "EUR02". Diese ist in Österreich, warum erkläre ich später im Post. Die nächste Ankündigung war, STACKIT wird 2026/2027 in Lübbenau die dritte Region aufbauen.
+Eröffnet wurde mit einer Keynote von "Bernie" Wagner, dem CEO der STACKIT Cloud. Er hatte natürlich Ankündigungen dabei, z.B. gibt eine zweite Region "EUR02". Diese ist in Österreich - warum erkläre ich später im Post. Die nächste Ankündigung war - STACKIT wird 2026/2027 in Lübbenau die dritte Region aufbauen. Die Herrschaften aus Heilbronn meinen es ernst. Montabauer hat zwar einen ICE-Anschluss, aber Heilbronn eine klare Cloud-Ansage.
 ### Business-Techtalk - was gibt es Neues?
 Es folgte ein Business-Techtalk mit Neuerungen und Ausblicken. Hier möchte ich besonders auf folgende Fragestellungen aufmerksam machen - was heisst:
-- technisch Suverän
-- Datensuveränität
-- Wirtschaftliche Suveränität
-Denkt das mal für Euch durch. Mehr dazu in späteren Posts.
+- **Technisch souverän**
+- **Datensouveränität**
+- **Wirtschaftliche Souveränität**
+Denkt mal für Euch durch was es bedeute kann. Mehr dazu in späteren Posts.
 
-Die Bundesagentur für Arbeit bzw. das IT-Systemhaus war auch da . Die STACKIT ist nun auch dort im Cloud-Broker als Option wählbar.
+Die Bundesagentur für Arbeit bzw. das IT-Systemhaus der BA war auch da . Die STACKIT ist auch dort im Cloud-Broker als Option wählbar.
 
 ### Die Türe zur Cloud ist aufgestoßen - "The Länd"
 ![CloudlandBadge2025](assets/images/the-land.jpg)
-Mit Eloquenz würde der Vortrag "Die Türe zur Cloud ist aufgestoßen" präsentiert. Hier wurden die Herausforderung der Digitalisierung im Public Sektor gezeigt. Und ganz ehrlich (ich bin ja Nordlicht), die Schwaben sind manchmal komisch. Aber wenn die was Anpacken, machen sie es ordentlich! Es dabei wurde auch die unbequeme Frage zum Schluss gestellt nebst antwort:
+Mit Eloquenz wurde der Vortrag "Die Türe zur Cloud ist aufgestoßen" präsentiert. Hier wurden die Herausforderung der Digitalisierung im Public Sektor gezeigt. Und ganz ehrlich (ich bin ja Nordlicht), die Schwaben sind manchmal komisch. Aber wenn die was Anpacken, machen sie es ordentlich! Es dabei wurde auch die unbequeme Frage zum Schluss gestellt nebst antwort:
 > aber was wenn die STACKIT in 5 Jahren doch nicht mehr da ist? Dann fahren wir nach Neckarsulm/Heilbronn und holen uns die Daten ab - denn das geht! Und wir können Sie weiter verarbeiten - da die Basis komplett OpenSource ist!
 
 Mit Christian Leinert, dem Vorstand der BITBW konnte ich Abends noch kurz "Hallo" sagen und mich für den Vortrag bedanken.  Aber nun meine Frage an Sie, Herr Leintert: 
