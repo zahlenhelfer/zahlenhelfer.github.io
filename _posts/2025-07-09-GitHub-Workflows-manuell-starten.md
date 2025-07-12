@@ -14,10 +14,10 @@ render_with_liquid: "false"
 ---
 
 ## Das Problem: GitHub-Workflows nochmal starten
-Durch Tools wie [act](https://github.com/nektos/act) kommt es bestimmt nicht mehr so häufig vor, aber manchmal möchtest Du einfach deinen Workflow in der GitHub-UI schnell noch einmal starten.
+GitHub Actions ist ein mächtiges Tool zur Automatisierung von Softwareprozessen. Standardmäßig werden Workflows durch Ereignisse wie `Push` oder `Pull Requests` ausgelöst. Aber was, wenn man einen Workflow manuell starten möchte? 
 
-## Die Lösung: automatische Schema Generierung aus der `values.yaml`
-Hier sei das GitHub-Projekt [helm-values-schema-json](https://github.com/losisin/helm-values-schema-json/tree/main) genannt. Dort gibt es  für für die Kommandozeile ein Tool.  Aber noch schöner ist die GitHub-Action, die das ganze dann noch bequemer erledigt. Ob Du also einen PreCommit-Hook nutzt oder entspannt dem GitHub-Runner die Arbeit überlässt,  Du tust deiner Chart Qualität etwas gutes. Das Tool liest dabei die `values.yaml` aus und erstellt ein entsprechendes JSON-Schema. Wenn Du dabei auch noch Annotationen in der `values.yaml` hinzufügst, wird es noch magischer! Lass uns schauen wie es funktionier.
+## Die Lösung: `workflow_dispatch`
+Genau dafür gibt es `workflow_dispatch`.
 
 ## Ein Beispiel:  Schema Generierung per GitHub-Action
 Aber als erstes suche Dir deinen GitHub-Workflow (`.github/workflows/helm-json-values.yaml`)
@@ -39,4 +39,56 @@ Hier sollte im einfachsten Fall einfach ein `Read and write permissions` ausgew�
 
 Weitere Ideen zu diesem Feature findest Du im original [Blog-Post](https://github.blog/changelog/2020-07-06-github-actions-manual-triggers-with-workflow_dispatch/) von GitHub.
 ## Fazit
-Es sind manchmal die kleinen Dinge die den Tag besser machen. Natürlich ging es auch ohne den dispatcher-Knopf irgendwie. Aber so ist es schon einfacher. Danke GitHub!
+Es sind manchmal die kleinen Dinge die den Tag besser machen. Mit `workflow_dispatch` erhältst Du die volle Kontrolle über deine Workflows. Ob für manuelle Deployments oder flexible Skripte - Danke GitHub!
+
+---
+
+### 🧩 Was ist `workflow_dispatch`?
+
+`workflow_dispatch` ist ein Trigger, mit dem du einen Workflow _manuell_ über die GitHub-Oberfläche starten kannst. Ideal für:
+
+- On-Demand-Deployments
+- Wartungsaufgaben
+- Skripte mit auswählbaren Eingaben
+
+### 🛠 Beispiel-Workflow
+
+```yaml
+name: Manuell starten
+
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Umgebung'
+        required: true
+        default: 'staging'
+        type: choice
+        options:
+          - staging
+          - production
+
+jobs:
+  run-script:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Zeige Eingabe
+        run: echo "Ausgewählte Umgebung: ${{ github.event.inputs.environment }}"
+```
+
+Dieser Workflow kann über die GitHub-Oberfläche manuell gestartet werden, inklusive Auswahl der Umgebung per Dropdown.
+
+### 🚀 So startest du den Workflow
+
+1. Gehe zum Repository auf GitHub.
+    
+2. Klicke auf den Reiter **Actions**.
+    
+3. Wähle den gewünschten Workflow aus der Liste.
+    
+4. Klicke auf **Run workflow**.
+    
+5. Gib die Eingaben an (falls definiert).
+    
+6. Bestätige mit **Run**.
+    
