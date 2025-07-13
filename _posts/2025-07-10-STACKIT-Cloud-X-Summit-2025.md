@@ -14,8 +14,8 @@ render_with_liquid: "false"
 
 ## STACKIT Cloud X Summit - klingt "suverän" und ist es auch!
 
-> Merke: Heilbronn hat keinen ICE Bahnhof - aber eine souveräne Cloud!
 ### TLDR;
+- Heilbronn hat keinen ICE Bahnhof - aber eine souveräne Cloud!
 - ein voller Terminkalender -  mit vielen gute Sessions
 - echte Menschen und kein glatt gebügelter Event
 - das Gefühl: "Souveräne Cloud wird klappen - wenn wir es wollen"
@@ -30,10 +30,8 @@ Es folgte ein Business-Techtalk mit Neuerungen und Ausblicken. Hier möchte ich
 - **Technisch souverän**
 - **Datensouveränität**
 - **Wirtschaftliche Souveränität**
-Denkt mal für Euch durch was es bedeute kann. Mehr dazu in späteren Posts.
-
-Die Bundesagentur für Arbeit bzw. das IT-Systemhaus der BA war auch da . Die STACKIT ist auch dort im Cloud-Broker als Option wählbar.
-
+ 
+Denkt mal für Euch durch was es bedeuten kann. Mehr dazu in späteren Posts. Die Bundesagentur für Arbeit bzw. das IT-Systemhaus der BA war auch da . Die STACKIT ist bei der BA per Cloud-Broker als Option wählbar. Damit steht also Projekten mit der STACKIT auch bei der Bundesagentur für Arbeit ein Weg offen.
 ### Die Türe zur Cloud ist aufgestoßen - "The Länd"
 ![CloudlandBadge2025](assets/images/the-land.jpg)
 Mit Eloquenz wurde der Vortrag "Die Türe zur Cloud ist aufgestoßen" präsentiert. Hier sind die Herausforderung der Digitalisierung im Public Sektor gezeigt worden. Und ganz ehrlich (ich bin ja Nordlicht), die Schwaben sind manchmal komisch. Aber wenn die was Anpacken, machen sie es ordentlich! Es ist auch die unbequeme Frage zum Schluss gestellt worden - inkl. Antwort:
@@ -48,6 +46,7 @@ Aber erstmal habe ich bewusst die Produkt-Updates im Vortrag: STACKIT Portfolio 
 - now - dieses Jahr 
 - next - 2026/27
 - later - später
+
 Durch diese Aufteilung konnten die Feature-Ankündigungen gut eingeordnet werden. Zu viel um es auf zu zählen, aber die richtigen Dinge sind priorisiert.
 ### Breakout 2 - Edge-Cluster @Scale: Industrie 4.0 mit der Schwarz Gruppe
 Danach folgte ein Themen Experiment für mich: "Edge-Cluster @Scale: Industrie 4.0 mit der Schwarz Gruppe". Dabei ging es im Kern um Kubernetes Cluster@Edge. Von KRITIS über Compliance bis AirGapped-Szenarien. Aber wieso so ein Thema bei einer Cloud-Veranstaltung? Kompletter Zugriff für den Kunden auf die Cluster. Sogar die Control-Plane liegt @Edge. Der Trick ist, alternativ das Management und die Konfiguration aus der Cloud heraus betreiben zu können. Dabei natürlich komplett in GitOps gegossen. Für mich stand fest, ich muss mehr wissen! Die Herren Martin Schüssler und Felix Kammerer gegriffen und mal etwas "techtalk" am Abend gemacht. Heraus kam, ich bin angefixt was [Talos](https://www.talos.dev/) angeht.
@@ -70,4 +69,5 @@ Der Schluss war dann noch einmal mit Bernie und einem Ausblick inkl. dem neuen T
 ### Sunset - Networking Party
 Ab 18 Uhr war dann noch Networking und Meet&Greet bis in die Nacht. Da kann ich gerade nur sagen - es war toll, aber ich heute auch müde! Mein persönliches Highlight - ein Foto mit "Bernie" und mir.
 ## Fazit
-Es gab Unsicherheiten, wird es einfach nur eine Hausmesse?! Schliesslich war die [STACKIT](https://www.stackit.de/de/), der Veranstalter. Es war nicht zu Gross, aber auch kein MeetUp. Fest steht: Ich komme gerne nächstes Jahr wieder!
+Es gab Unsicherheiten, wird es einfach nur eine Hausmesse?! Schliesslich war die [STACKIT](https://www.stackit.de/de/), der Veranstalter. Es war nicht zu Gross, aber auch kein MeetUp. 
+Fest steht: Ich komme gerne nächstes Jahr wieder!
