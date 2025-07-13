@@ -11,16 +11,13 @@ permalink: /:year/:month/:day/:title:output_ext
 published: true
 render_with_liquid: "false"
 ---
-
-## STACKIT Cloud X Summit - klingt "suverän" und ist es auch!
+![CloudlandBadge2025](assets/images/cloudx-logo.jpg)
 
 ### TLDR;
 - Heilbronn hat keinen ICE Bahnhof - aber eine souveräne Cloud!
 - ein voller Terminkalender -  mit vielen gute Sessions
 - echte Menschen und kein glatt gebügelter Event
-- das Gefühl: "Souveräne Cloud wird klappen - wenn wir es wollen"
 
-![CloudlandBadge2025](assets/images/cloudx-logo.jpg)
 ### Vormittags - 7:30 Uhr und es geht los!
 Ab 7:30 Uhr ging die Akkreditierung los und ein Business-Breakfast mit ersten Kontakten. Hier war klar - maximal 5% Polos, 0% Hoodies, maximum Business Casual. Der BWLer in mir blühte auf, dem Tekki wurde mulmig.
 ### Keynote
