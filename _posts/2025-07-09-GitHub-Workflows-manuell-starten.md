@@ -20,10 +20,11 @@ Genau dafür gibt es `workflow_dispatch`. Es ist ein Trigger, mit dem Du einen W
 - On-Demand-Deployments
 - Wartungsaufgaben
 - Skripte einfach manuell starten (debugging)
+ 
 ## Beispiel:  ein manueller Workflow
 Erstellen wir einen Github-Workflow.  z.B.`.github/workflows/manual.yml`
 
-```yaml title="Ein Beispiel Workflow"
+```yaml
 name: Manuell starten
 
 on:
