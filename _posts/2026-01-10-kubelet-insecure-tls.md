@@ -18,49 +18,51 @@ Bei vielen meiner Trainings für das Thema Kubernetes kommt der Punkt wo wir den
 ```
 E0108 13:29:15.336920 1 scraper.go:149] "Failed to scrape node" err="Get \"https://167.71.63.166:10250/metrics/resource\": tls: failed to verify certificate: x509: cannot validate certificate for 167.71.63.166 because it doesn't contain any IP SANs" node="k8s-node-0"
 ```
-Was ist passiert? Nun, der erfahrene Kubernetes-Admin weiss, der Subject-Alternative Name oder auch SAN ist nicht korrekt gesetzt. Der `metrics-server` möchte gerne per IP-Adresse und nicht per DNS Namen die Zertifikate validieren. Dort fehlt gerade bei selbst erstellten Kubernetes-Nodes häufig die IP Adresse im SAN-Teil des  Zertifikats.
+Was ist passiert? Kurz zusammengefasst - der Subject Alternative Name oder auch kurz SAN ist nicht korrekt gesetzt. Der `metrics-server` möchte gerne die IP-Adresse und nicht den DNS Namen des Zertifikates validieren. Du kannst es relativ einfach prüfen:
+`openssl x509 -text -noout -in /var/lib/kubelet/pki/kubelet.crt`
+Dort fehlt gerade bei selbst erstellten Kubernetes-Nodes häufig die IP Adresse im SAN-Teil. 
+```
+X509v3 Subject Alternative Name:
+    DNS:k8s-node-0
+```
+Auch ein Umstellen der Reihefolge der Argumente beim Adress-Type
+`--kubelet-preferred-address-types=InternalIP,ExternalIP,Hostname`
+bringt nicht immer eine Lösung. Hier kann zwar der `Hostname` an erste Stelle gezigen werden, da aber gerade in Homelabs der Hostname vom DNS gerne mal nicht auflösen möchte bringt das auch keinen Erfolgt. Also lesen wir mal bei GitHub nach, was das Projekt dazu meint.
 ## Keine Lösung: `--kubelet-insecure-tls`
-Genau dafür gibt es `workflow_dispatch`. Es ist ein Trigger, mit dem Du einen Workflow _manuell_ über die GitHub-Oberfläche starten kannst. Ideal für:
-- On-Demand-Deployments
-- Wartungsaufgaben
-- Skripte einfach manuell starten (debugging)
+Genau dafür gibt die offizielle README.md des `metric-server` auf [GitHub](https://github.com/kubernetes-sigs/metrics-server?tab=readme-ov-file#requirements) einen Ratschlag:
+>- Kubelet certificate needs to be signed by cluster Certificate Authority (or disable certificate validation by passing `--kubelet-insecure-tls` to Metrics Server)
 
-## Die Lösung: `csr approve`
-Das Kubelet kann ein Zertifikat bei der Kubernetes-CA ausstellen lassen. Der ganze Aufwand mit `openssl` kann dabei mitlerweile elegant umgangen werden. Drei einfache Schritte machen es Möglich:
-- Die kubelete-config erweitern
-- Den Dienst `kubelet` neu starten und damit einen `csr` auslösen
+Also schnell mal `kubectl edit deployment metrics-server -n kube-system` gestartet und `--kubelet-insecure-tls` als Argument hinzugefügt.
+Aber das kann doch nicht die "richtige" Lösung sein. Es ist doch nur ein Feld in den Zertifikaten. Es ist eben Quick & Dirty und wird gerne genutzt.
+
+## Die schnelle & saubere Lösung: `tlsBootstrap`
+Da es sich bei dem Thema um das die Zertifikate für das `Kubelet`handelt sollten wir "einfach" ein neues Zertifikat bei der Kubernetes-CA ausstellen und signieren lassen. Das ganze kann natürlich mit `openssl`-Magie passieren. Aber es geht auch noch einfacher. Es reichen diese drei einfache Schritte: 
+- Die kubelete-Config mit [`serverTLSBootstrap`](https://kubernetes.io/docs/reference/access-authn-authz/kubelet-tls-bootstrapping/) erweitern
+- Den Dienst `kubelet` neu starten und damit einen `csr` in Kubernetes auslösen (siehe Kubernetes-Dokumentation)
 - Den `certificate signing request` in Kubernetes genehmigen
 
-## Beispiel:  ein manueller Workflow
-Erstellen wir einen Github-Workflow.  z.B.`.github/workflows/manual.yml`
+## Beispiel:  signierte Zertifikate von der Kubernetes-CA
+Die config-Datei des kubelet erweitern `/var/lib/kubelet/config.yaml`
 
-```yaml
-name: Manuell starten
-
-on:
-  workflow_dispatch:
-    inputs:
-      environment:
-        description: 'Umgebung'
-        required: true
-        default: 'staging'
-        type: choice
-        options:
-          - staging
-          - production
-
-jobs:
-  run-script:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Zeige Eingabe
-        run: echo "${{ github.event.inputs.environment }}"
+```shell
+serverTLSBootstrap: true
 ```
 
-Hier wird nun nur noch bei manueller Eingabe der Workflow gestartet. Das kannst Du natürlich mit `push` bzw. `pr` kombinieren. Jetzt kannst Du den gewünschten Workflow im Reiter **Actions** auswählen. Klicke dann auf **Run workflow**. 
-![GitHub-Workflow-Dispatch](assets/images/gh-workflow-dispatch.png)
+Jetzt noch den Dienst neu starten
+```shell
+systemctl restart kubelet
+```
+
 Gib die Eingaben an (falls wie im Beispiel definiert) und Bestätige mit **Run**. Das war es auch schon. Wenn der Workflow dann durchgelaufen ist, kann Du wie gewohnt die Logs inspizieren.
-![GitHub-Workflow-Log](assets/images/gh-workflow-log.png)
-Ganz praktisch und einfach. Weitere Ideen zu diesem Feature findest Du im original [Blog-Post](https://github.blog/changelog/2020-07-06-github-actions-manual-triggers-with-workflow_dispatch/) von GitHub.
+```shell
+kubectl get csr
+NAME        AGE   SIGNERNAME                      REQUESTOR              REQUESTEDDURATION   CONDITION
+csr-dnrzp   2s    kubernetes.io/kubelet-serving   system:node:k8s-node-0   <none>              Pending
+```
+
+```shell
+kubectl certificate approve csr-dnrzp
+```
+Das muss natürlich für alle Nodes durchgeführt werden. Wenn Ihr dann bei den metrics-server-pods schaut sollte der READY-Status von 0/1 auf 1/1 gewechselt haben.
 ## Fazit
-Manchmal ist es einfach kein Aufwand die Dinge richtig zu machen. Auch bei diesem Es sind manchmal die kleinen Dinge die den Tag besser machen. Mit `workflow_dispatch` erhältst Du die volle Kontrolle über deine Workflows. Ob für manuelle Deployments oder flexible Skripte - Danke GitHub!
+Manchmal ist es einfach kein Aufwand die Dinge richtig zu machen. Ja, Quick & Dirty ist schön aber der Aufwand ist doch überschaubar, also lasst es uns richtig machen. PS: schaut mal in der kubeconfig-Ressource
