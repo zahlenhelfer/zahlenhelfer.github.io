@@ -14,10 +14,11 @@ render_with_liquid: "false"
 ---
 
 ## Das Problem: --kubelet-insecure-tls und der metrics-server
-Bei vielen meiner Trainings für das Thema Kubernetes kommt der Punkt wo wir den [metrics-server](https://github.com/kubernetes-sigs/metrics-server) installieren. Seit es um den Horizontal-Pod-Autoscaler zu zeigen oder um `kubectl top pod` zu nutzen. Dabei gibt es jedesmal die Meldung:
+Bei vielen meiner Trainings für das Thema Kubernetes kommt der Punkt wo wir den [metrics-server](https://github.com/kubernetes-sigs/metrics-server) installieren. Sei es um den Horizontal-Pod-Autoscaler zu zeigen oder einfach damit `kubectl top pod` funktioniert. Dabei gibt es jedesmal die Meldung:
 ```
+E0108 13:29:15.336920 1 scraper.go:149] "Failed to scrape node" err="Get \"https://167.71.63.166:10250/metrics/resource\": tls: failed to verify certificate: x509: cannot validate certificate for 167.71.63.166 because it doesn't contain any IP SANs" node="k8s-node-0"
 ```
-Was ist passiert? Der erfahrene Kubernetes-Admin weiss, der Subject-Alternative Name oder auch SAN ist nicht korrekt gesetzt.
+Was ist passiert? Nun, der erfahrene Kubernetes-Admin weiss, der Subject-Alternative Name oder auch SAN ist nicht korrekt gesetzt. Der `metrics-server` möchte gerne per IP-Adresse und nicht per DNS Namen die Zertifikate validieren. Dort fehlt gerade bei selbst erstellten Kubernetes-Nodes häufig die IP Adresse im SAN-Teil des  Zertifikats.
 ## Keine Lösung: `--kubelet-insecure-tls`
 Genau dafür gibt es `workflow_dispatch`. Es ist ein Trigger, mit dem Du einen Workflow _manuell_ über die GitHub-Oberfläche starten kannst. Ideal für:
 - On-Demand-Deployments
