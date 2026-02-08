@@ -7,12 +7,13 @@ tags:
   - tip
   - de
   - kubernetes
-  - pod
+  - security
+  - grundschutz
 permalink: /:year/:month/:day/:title:output_ext
-published: true
+published: false
 render_with_liquid: "false"
 ---
-## Das Problem: "magische" Umgebungsvariablen in Pods
+## Das Problem: "magische" Umgebungsvariablen  und der Grundschutz
 Bei meinen Trainings kommt es immer wieder vor, das wir in einem Pod eine Menge Umgebungsvariablen finden. Diese haben wir allerdings **nicht** angelegt und sie sind auch nicht im _Dockerfile_ erstellt worden. Die Erklärung ist ganz einfach. Wenn Du in Kubernetes einen **Pod** startest, fügt der Cluster automatisch **Umgebungsvariablen** für **alle Services** im **selben Namespace** hinzu. Dieses Verhalten kannst Du auch in der Kubernetes Dokumentation [ Accessing the Service](https://kubernetes.io/docs/tutorials/services/connect-applications-service/#accessing-the-service) nachlesen. Das kann dann z.B. so aussehen:
 
 ```bash
