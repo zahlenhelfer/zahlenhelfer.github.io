@@ -16,21 +16,6 @@ render_with_liquid: "false"
 
 
 
-## **2. Die Lösung: `enableServiceLinks: false`**
-
-Die einfachste Lösung ist, die automatische Injektion von Service-Variablen **komplett zu deaktivieren**. Das geht mit der Pod-Spezifikation:
-
-```yaml
-spec:
-  enableServiceLinks: false  # Deaktiviert die automatische Injektion
-```
-
-### **Wann solltest du es deaktivieren?**
-
-✔ **In großen Clustern** mit vielen Services ✔ **Wenn du DNS-basierte Service-Discovery** nutzt (z. B. `redis.default.svc.cluster.local`) ✔ **Wenn du Konflikte mit manuellen Umgebungsvariablen vermeiden willst**
-
----
-
 ## **3. Beispiel: Nginx-Pod mit `enableServiceLinks: false` in `kind`**
 
 Wir erstellen einen **lokalen Kubernetes-Cluster mit `kind`**, starten einen **Nginx-Pod** mit deaktivierten Service-Links und machen ihn über einen **Service** erreichbar.
@@ -147,11 +132,20 @@ Aber was kann daran problematisch sein?
 - **Konflikte:** Wenn ein Service-Name mit einer manuell gesetzten Variable kollidiert, kann das zu Fehlern führen.
 - Und nicht zu vergessen, 
 
-**Beispiel:** Falls du eine eigene Variable `REDIS_HOST` setzt, könnte sie durch die automatische Variable überschrieben werden.
-## Keine Lösung: `--kubelet-preferred-address-types`
-Die erste Lösung könnte das Umstellen der Reihefolge des Arguments beim Adress-Type sein. Hier ist der Standard:
-`--kubelet-preferred-address-types=InternalIP,ExternalIP,Hostname`
-Hier kann zwar der `Hostname` an erste Stelle gezogen werden, da aber gerade in Homelabs der Hostname vom DNS gerne mal nicht auflösen möchte - bringt das auch keinen Erfolg. Also lesen wir mal bei GitHub nach, was das Projekt dazu meint.
+**Beispiel:** Falls Du eine eigene Variable `REDIS_HOST` setzt, könnte sie durch die automatische Variable überschrieben werden.
+
+## Die Lösung: `enableServiceLinks: false`
+
+Die einfachste Lösung ist, die automatische Injektion von Service-Variablen **komplett zu deaktivieren**. Das geht mit der Pod-Spezifikation:
+
+```yaml
+spec:
+  enableServiceLinks: false  # Deaktiviert die automatische Injektion
+```
+
+### **Wann solltest du es deaktivieren?**
+
+✔ **In großen Clustern** mit vielen Services ✔ **Wenn du DNS-basierte Service-Discovery** nutzt (z. B. `redis.default.svc.cluster.local`) ✔ **Wenn du Konflikte mit manuellen Umgebungsvariablen vermeiden willst**
 ## Keine Lösung: `--kubelet-insecure-tls`
 Genau dafür gibt die offizielle `README.md` des `metric-server` auf [GitHub](https://github.com/kubernetes-sigs/metrics-server?tab=readme-ov-file#requirements) einen Ratschlag:
 >- Kubelet certificate needs to be signed by cluster Certificate Authority (or disable certificate validation by passing `--kubelet-insecure-tls` to Metrics Server)
