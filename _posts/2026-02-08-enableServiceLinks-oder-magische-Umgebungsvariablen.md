@@ -1,6 +1,6 @@
 ---
 layout: post
-title: 'Tip:  enableServiceLinks - "magischen" Umgebungsvariablen in Pods'
+title: 'Tip:  enableServiceLinks - "magische" Umgebungsvariablen in Pods abstellen'
 category: kubernetes
 tags:
   - blog
