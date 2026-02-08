@@ -10,10 +10,11 @@ tags:
   - grundschutz
   - bsi
 permalink: /:year/:month/:day/:title:output_ext
-published: false
+published: true
 render_with_liquid: "false"
 ---
-In meinem letzen [Blog-Post](https://zahlenhelfer.github.io/2026/02/08/enableServiceLinks-oder-magische-Umgebungsvariablen.html) bin ich auf das Thema Umgebungsvariablen in Kubernetes bzw. `enableServiceLinks: false` eingegangen. Dabei ging es ja um eine rein technische Betrachtung des Thema. Nochmal kurz zusammengefasst:
+In meinem letzen [Blog-Post](https://zahlenhelfer.github.io/2026/02/08/enableServiceLinks-oder-magische-Umgebungsvariablen.html) bin ich auf das Thema Umgebungsvariablen in Kubernetes bzw. `enableServiceLinks: false` zum Unterdrücken eingegangen. Dabei ging es ja um eine rein technische Betrachtung des Themas. 
+
 >TL;DR:
 >`spec.enableServiceLinks: true` (Default) bewirkt, dass Kubernetes **automatisch Umgebungsvariablen mit Service‑Namen, IPs und Ports** aus dem Namespace in den Pod injiziert. 
 >
@@ -22,12 +23,12 @@ In meinem letzen [Blog-Post](https://zahlenhelfer.github.io/2026/02/08/enableSer
 >`NGINX_SERVICE_SERVICE_HOST=10.96.117.78`
 >`NGINX_SERVICE_SERVICE_PORT=80`
 ## Das Problem aus Sicht des IT-Grundschutz
-Durch das "magische" injitzieren von Umgebungsvariablen in Pod mit Service und Port Informationen gibt es eine ungewollte **Informationsoffenlegung** (interne Service‑Topologie). Das ist sicherheitsrelevant, denn Umgebungsvariablen sind:
+Durch das "magische" injitzieren von Umgebungsvariablen in Pods mit Service und Port Informationen gibt es eine ungewollte **Informationsoffenlegung** (interne Service‑Topologie). Das ist sicherheitsrelevant, denn Umgebungsvariablen sind:
 - **für jeden Prozess im Container lesbar**
 - häufig **Teil von Debug‑Ausgaben / Dumps**
 - leicht **exfiltrierbar bei Kompromittierung**
-Damit werden interne Architektur‑ und Netzwerkdetails preisgegeben. Zudem wird natürlich die **Angriffsfläche bei kompromittierten Pods** erhöht. Das ganze bewirkt also eine **unnötige Kopplung an Cluster‑Details**. Oder ganz direkt - zu viel Information in einem Pod die meist nie durch den Workload genutzt wird. Anwendungen nutzen das **DNS-basierte Service-Discovery**, also über Namen wie z.B. `nginx-service.default.svc.cluster.local`. Mehr dazu findet Ihr in der Kubernetes Doku zu [SRV Records](https://kubernetes.io/docs/concepts/services-networking/dns-pod-service/#srv-records). Was können wir nun also im IT-Grundschutz dazu finden?
-## Auslegungen
+Damit werden interne Architektur‑ und Netzwerkdetails preisgegeben. Zudem wird natürlich die **Angriffsfläche bei kompromittierten Pods** erhöht. Das ganze bewirkt also eine **unnötige Kopplung an Cluster‑Details**. Also ganz direkt ausgedrückt - **zu viel Information in einem Pod** die meist nie durch den Workload genutzt wird. Anwendungen nutzen das **DNS-basierte Service-Discovery**, also über Namen wie z.B. `nginx-service.default.svc.cluster.local`. Mehr dazu findet Ihr in der Kubernetes Doku zu [SRV Records](https://kubernetes.io/docs/concepts/services-networking/dns-pod-service/#srv-records). Was können wir nun also im IT-Grundschutz dazu finden?
+## Auslegung
 Es gibt keinen einzelnen BSI‑Grundschutz‑Baustein, der `enableServiceLinks: false` explizit fordert, aber diese Maßnahme lässt sich klar und sauber aus dem Baustein _APP.4.4 Kubernetes_ ableiten, unterstützt durch _SYS.1.6 Containerisierung_.
 ### SYS.1.6 – Containerisierung
 Die SYS.1.6. betrachtet Container als **potenziell kompromittierbar** und fordert daher eine **Minimierung von Informationen, Rechten und Abhängigkeiten im Container**. Ein kompromittierter Container mit Service Links:
@@ -43,12 +44,11 @@ Software‑Komponenten dürfen nur die Informationen erhalten, die für den vorg
 ### APP.4.4.A9 – Nutzung von Kubernetes Service‑Accounts (S)
 Pods sind so zu konfigurieren, dass nur notwendige Zugriffe und Informationen verfügbar sind.  
 ➡️ Service‑Discovery erfolgt über DNS, eine zusätzliche Bereitstellung per Umgebungsvariablen ist nicht erforderlich.
-
 ### APP.4.4.A13 – Automatisierte Auditierung der Konfiguration (H)
 Sicherheitsrelevante Kubernetes‑Konfigurationen sind standardisiert und prüfbar umzusetzen. 
-➡️ Die Deaktivierung von Service‑Links entspricht etablierten Sicherheitsbenchmarks (z. B. CIS Kubernetes Benchmark). Zudem 
+➡️ Die Deaktivierung von Service‑Links entspricht etablierten Sicherheitsbenchmarks (z. B. CIS Kubernetes Benchmark - Abschnitt 5 Policies / Zielsetzung der Controls).
 ## Praxis-Maßnahme : Kyverno-Policy
-Der Kubernetes‑Cluster implementiert eine definierte und geprüfte Sicherheitsbaseline auf Basis von Policy‑as‑Code. Die Einstellung `enableServiceLinks: false` wird im Rahmen des Admission‑Controllers im Audit‑Modus überwacht. Hiermit werden Abweichungen von der Soll‑Konfiguration frühzeitig im Betrieb erkannt, damit sind nachvollziehbare Nachweise zur Erfüllung der Anforderungen des BSI‑Bausteins SYS.1.6 Containerisierung sowie der ISO/IEC 27001:2022 unter Berücksichtigung der Intention des CIS Kubernetes Benchmarks bereitzustellen.
+Der Kubernetes‑Cluster implementiert eine definierte und geprüfte Sicherheitsbaseline auf Basis von Policy‑as‑Code mit dem Tool Kyverno. Die Einstellung `enableServiceLinks: false` wird im Rahmen des Admission‑Controllers im Audit‑Modus überwacht. Hiermit werden Abweichungen von der Soll‑Konfiguration frühzeitig im Betrieb erkannt, damit sind nachvollziehbare Nachweise zur Erfüllung der Anforderungen des BSI‑Bausteins SYS.1.6 Containerisierung sowie der ISO/IEC 27001:2022 bereitgestellt.
 ```yaml
 # disabele-serviceLinks.yaml
 apiVersion: kyverno.io/v1
@@ -61,7 +61,7 @@ kind: ClusterPolicy
       policies.kyverno.io/severity: medium
       policies.kyverno.io/subject: Pod
       policies.kyverno.io/description: >
-        Ensures that Kubernetes Pods disable Service Links to reduce implicit exposure of service metadata in accordance with BSI SYS.1.6, ISO/IEC 27001:2022 and CIS Kubernetes Benchmark intent.
+        Ensures that Kubernetes Pods disable Service Links to reduce implicit exposure of service metadata in accordance with BSI SYS.1.6, ISO/IEC 27001:2022.
 spec:
   validationFailureAction: Audit
   background: true
@@ -84,4 +84,4 @@ spec:
 			enableServiceLinks: false
 ```
 ## Zusammenfassung für Prüfer:innen
-Die Deaktivierung von `enableServiceLinks` dient der Reduktion unnötiger Informationsoffenlegung innerhalb von Kubernetes‑Pods und setzt die Anforderungen des BSI IT‑Grundschutzes (APP.4.4 Kubernetes, SYS.1.6 Containerisierung) um. Die Maßnahme unterstützt das Least‑Privilege‑Prinzip, reduziert die Angriffsfläche und ist Bestandteil der standardisierten und auditierbaren Kubernetes‑Baseline.
+Die Deaktivierung von `enableServiceLinks` dient der Reduktion unnötiger Informationsoffenlegung innerhalb von Kubernetes‑Pods und setzt die Anforderungen des BSI IT‑Grundschutzes (APP.4.4 Kubernetes, SYS.1.6 Containerisierung) um. Die Maßnahme per Policy-as-Code unterstützt das Least‑Privilege‑Prinzip, reduziert die Angriffsfläche und ist Bestandteil der standardisierten und auditierbaren Kubernetes‑Baseline.
