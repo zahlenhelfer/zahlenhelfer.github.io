@@ -1,19 +1,38 @@
 ---
 layout: post
-title: 'Tip:  enableServiceLinks - "magischen" Umgebungsvariablen in Pods'
+title: magische Umgebungsvariablen in Pods - was sagt der IT-Grundschutz?
 category: kubernetes
 tags:
   - blog
-  - tip
   - de
   - kubernetes
   - security
   - grundschutz
+  - bsi
 permalink: /:year/:month/:day/:title:output_ext
 published: false
 render_with_liquid: "false"
 ---
-## Das Problem: "magische" Umgebungsvariablen  und der Grundschutz
+In meinem letzen Blog-Post bin ich ja auf das Thema Umgebungsvariablen in Kubernetes bzw. `enableServiceLinks: false` eingegangen. Dabei ging es ja um eine rein technische Betrachtung.
+
+>TL;DR:
+>`spec.enableServiceLinks: true` (Default) bewirkt, dass Kubernetes **automatisch Umgebungsvariablen mit Service‑Namen, IPs und Ports** aus dem Namespace in den Pod injiziert. Beispiel:
+
+Damit gibt es also eine **Informationsoffenlegung** (interne Service‑Topologie). Zudem wird die **Angriffsfläche bei kompromittierten Pods** erhöht.
+- **unnötige Kopplung an Cluster‑Details**
+
+## Das Problem aus Sicht des IT-Grundschutz: 
+Im Rahmen des IT-Grundschutz möchte ich das Thema auch für folgende Bausteine beleuchten:
+- **SYS.1.6 – Containerisierung** - Minimierung der Angriffsfläche von Containern
+- **APP.4.4.A3 – Identitäts‑ und Berechtigungsmanagement (B)**  
+    Software‑Komponenten dürfen nur die Informationen erhalten, die für den vorgesehenen Zweck erforderlich sind.  
+    → Service‑Links stellen nicht zwingend erforderliche Informationen bereit.
+- **APP.4.4.A9 – Nutzung von Kubernetes Service‑Accounts (S)**  
+    Pods sind so zu konfigurieren, dass nur notwendige Zugriffe und Informationen verfügbar sind.  
+    → Service‑Discovery erfolgt über DNS, eine zusätzliche Bereitstellung per Umgebungsvariablen ist nicht erforderlich.
+### Zusammenfassung für Prüfer:innen
+Die Deaktivierung von `enableServiceLinks` dient der Reduktion unnötiger Informationsoffenlegung innerhalb von Kubernetes‑Pods und setzt die Anforderungen des BSI IT‑Grundschutzes (APP.4.4 Kubernetes, SYS.1.6 Containerisierung) um. Die Maßnahme unterstützt das Least‑Privilege‑Prinzip, reduziert die Angriffsfläche und ist Bestandteil der standardisierten und auditierbaren Kubernetes‑Baseline.
+## Das Problem: Kubernetes "magische" Umgebungsvariablen  und der IT-Grundschutz
 Bei meinen Trainings kommt es immer wieder vor, das wir in einem Pod eine Menge Umgebungsvariablen finden. Diese haben wir allerdings **nicht** angelegt und sie sind auch nicht im _Dockerfile_ erstellt worden. Die Erklärung ist ganz einfach. Wenn Du in Kubernetes einen **Pod** startest, fügt der Cluster automatisch **Umgebungsvariablen** für **alle Services** im **selben Namespace** hinzu. Dieses Verhalten kannst Du auch in der Kubernetes Dokumentation [ Accessing the Service](https://kubernetes.io/docs/tutorials/services/connect-applications-service/#accessing-the-service) nachlesen. Das kann dann z.B. so aussehen:
 
 ```bash
