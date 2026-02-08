@@ -28,38 +28,45 @@ NGINX_SERVICE_PORT=tcp://10.96.117.78:80
 Wenn Du mehrere Services in einem Namespace hast, wird die Liste natürlich länger. Aber was kann daran so problematisch sein?
 
 - **Zu viele Variablen:** In großen Clustern mit vielen Services wird die Liste der Umgebungsvariablen unübersichtlich.
-- **Langsame Pod-Starts:** Kubernetes muss alle Services auflisten, was bei vielen Services zu Verzögerungen führt.
+- **Langsames Pod starten:** Kubernetes muss alle Services auflisten, was bei vielen Services zu Verzögerungen führen kann.
 - **Konflikte:** Wenn ein Service-Name mit einer manuell gesetzten Variable kollidiert, kann das zu Fehlern führen.
-- Im Rahmen von Compliance und Sicherheit werde ich das Thema in einem separaten Post für den IT-Grundschutz beleuchten.
+- Wenn dazu noch **Auto-Scaling** via HPA oder KEDA dazu kommt, müssen für jedem Pod diese Variablen erzeugt werden. Das kostet BootStrap-Zeit beim Deployment.
+- Im Rahmen von **Compliance und Sicherheit** werde ich das Thema in einem separaten Post für den IT-Grundschutz aufbereiten.
 
-> Wichtige Anmerkung: Wer das direkt ausprobiert wird sehen, das es **immer** die Umgebungsvariablen `KUBERNETES_SERVICE_*` und `KUBERNETES_PORT*` gibt. Dieses Verhalten ist fest in Kubernetes kodiert. Ein `enableServiceLinks:false` ändert dies auch nicht!
+> Was nicht bekannt ist, kann auch schwerer gehackt werden. :)
+
+Aber der Workload muss doch wissen wo z.B. ein Redis-Cache oder eine MessageQueue ist. Das wäre hiermit ja super dynamisch! Ja, aber wir nutzen doch meistens das **DNS-basierte Service-Discovery** wie in unserem Beispiel: `nginx-service.default.svc.cluster.local`. Mehr dazu findet Ihr in der Kubernetes Doku zu [SRV Records](https://kubernetes.io/docs/concepts/services-networking/dns-pod-service/#srv-records) Damit brauchen wir diese Umgebungsvariablen nicht.
 ## Die Lösung: `enableServiceLinks: false`
-Die einfachste Lösung ist dieses Verhalten **komplett zu deaktivieren**. Das geht mit folgender Pod-Spezifikation:
+Die einfachste Lösung ist, dieses Verhalten **komplett zu deaktivieren**. Das geht mit folgender Pod-Spezifikation:
 
 ```yaml
 spec:
   enableServiceLinks: false
 ```
 
+> Wichtige Anmerkung: Wer das direkt ausprobiert, wird sehen das es **immer** die Umgebungsvariablen `KUBERNETES_SERVICE_*` und `KUBERNETES_PORT*` gibt. Dieses Verhalten ist fest in Kubernetes kodiert. Ein `enableServiceLinks:false` ändert es auch nicht!
 ## Beispiel: Pod mit `enableServiceLinks: false`
 In diesem Beispiel starten wir einen **Nginx-Pod** mit deaktivierten Service-Links und machen ihn über einen **Service** erreichbar.
-### Schritt 1: Nginx-Pod mit `enableServiceLinks: false` erstellen
+### Schritt 1: Nginx-Pods mit  und ohne `enableServiceLinks: false` erstellen
 
 ```yaml
-# test-ns.yaml
-apiVersion: v1
-kind: Namespace
-metadata:
-  name: test-links
-```
-
-```yaml
-# nginx-pod.yaml
+# nginx-pods.yaml
 apiVersion: v1
 kind: Pod
 metadata:
-  name: nginx-pod
-  namespace: test-links
+  name: nginx-pod-with-links
+spec:
+  enableServiceLinks: true # default
+  containers:
+  - name: nginx
+    image: nginx:latest
+    ports:
+    - containerPort: 80
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nginx-pod-without-links
   labels:
     app: nginx
 spec:
@@ -77,7 +84,6 @@ apiVersion: v1
 kind: Service
 metadata:
   name: nginx-service
-  namespace: test-links
 spec:
   selector:
     app: nginx
@@ -89,32 +95,28 @@ spec:
 ```
 
 ```sh
-kubectl apply -f nginx-pod.yaml
+kubectl apply -f nginx-pods.yaml
 kubectl apply -f nginx-service.yaml
 ```
 
-### Schritt 2: Überprüfen, ob keine Service-Variablen "magisch" erstellt wurden
+### Schritt 2: Überprüfen, ob Service-Variablen "magisch" erstellt wurden
 
+Jetzt testen wir, wie die Ausgabe beim standard Verhalten ist:
 ```sh
-kubectl exec nginx-pod -- env | grep SERVICE
+kubectl exec nginx-pod-with-links -- env | grep SERVICE
 ```
 
-→ **Erwartetes Ergebnis:** Keine Ausgabe (weil `enableServiceLinks: false`).
+→ **Erwartetes Ergebnis:**
 
-## Fazit: Wann `enableServiceLinks` nutzen oder deaktivieren?**
+Nun die Gegenprobe mit dem anderen Pod bei dem `enableServiceLinks: false` gesetzt wurde:
+```sh
+kubectl exec nginx-pod-without-links -- env | grep SERVICE
+```
 
-| **Szenario**                         | **Empfehlung**                                                                 |
-| ------------------------------------ | ------------------------------------------------------------------------------ |
-| **Kleiner Cluster, wenige Services** | `enableServiceLinks: true` (Standard) ist okay.                                |
-| **Großer Cluster, viele Services**   | `enableServiceLinks: false` (vermeidet Performance-Probleme).                  |
-| **DNS-basierte Service-Discovery**   | `enableServiceLinks: false` (besser `redis.default.svc.cluster.local` nutzen). |
-| **Manuelle Umgebungsvariablen**      | `enableServiceLinks: false` (vermeidet Konflikte).
+→ **Erwartetes Ergebnis:**
 
-### **Best Practices**
+Nur die Kubernetes-Variablen sollten ausgegeben werden (weil `enableServiceLinks: false`).
 
-✅ **Nutze DNS-Namen** statt Umgebungsvariablen (z. B. `nginx-service.default.svc.cluster.local`). 
-✅ **Deaktiviere `enableServiceLinks` in großen Clustern** oder wenn du Konflikte vermeiden willst. 
-✅ **Für Tests & Entwicklung** ist `enableServiceLinks: true` meist unproblematisch.
-### **Weitere Ressourcen**
+## Fazit: Wann `enableServiceLinks` nutzen oder deaktivieren?
 
-- [Kubernetes-Dokumentation zu `enableServiceLinks`](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.26/#podspec-v1-core)
+Für Tests & Entwicklung ist der Standard mit `enableServiceLinks: true` meist unproblematisch. Auch bei kleineren Cluster und wenigen Workloads. Wenn zudem jede Anwendung ihren eigenen Namespace bekommt, ist die Anzahl der Variablen meist überschaubar. _Aber_ wird dieses Feature bzw. die Infomation der Variablen auch wirklich von der Anwendungen genutzt? Wir haben doch noch das **DNS-basierte Service-Discovery** (nginx-service.default.svc.cluster.local).
