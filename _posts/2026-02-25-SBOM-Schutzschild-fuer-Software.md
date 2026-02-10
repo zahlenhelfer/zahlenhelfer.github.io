@@ -14,9 +14,9 @@ render_with_liquid: "false"
 
 # SBOM: Dein unsichtbarer Schutzschild für sichere Software
 
-Es gibt Momente im Leben, da ist Timing einfach alles. Da wollte ich eigentlich von den Containerdays schreiben und vor allen die Kubernetes IT-Grundschutz Thematik weiter treiben, aber dann kam die Nachricht: [Neuer npm-Großangriff: Hunderte Pakete mit selbst-vermehrender Malware infiziert](https://www.heise.de/news/Neuer-NPM-Grossangriff-Selbst-vermehrende-Malware-infiziert-Dutzende-Pakete-10651111.html). Ich erinnerte mich sofort an meinen Certified Kubernetes Security Kurs von der Linuxfoundation. Aber da nutzte ich bisher doch immer das SBOM Format und wie war das jetzt nochmal mit dem SBOM. Ein praktischer kurzer Überblick. 
-### SBOM - Die Zutatenliste deiner Software
+Es gibt Momente im Leben, da ist Timing einfach alles. Da wollte ich eigentlich von den Containerdays schreiben und vor allen die Kubernetes IT-Grundschutz Thematik weiter treiben, aber dann kam die Nachricht: [Neuer npm-Großangriff: Hunderte Pakete mit selbst-vermehrender Malware infiziert](https://www.heise.de/news/Neuer-NPM-Grossangriff-Selbst-vermehrende-Malware-infiziert-Dutzende-Pakete-10651111.html). Und dann machte es Woosh und es ist 2026 und der Post ist immer noch nicht online gestellt. Das wird jetzt nachgeholt.
 
+### SBOM - Die Zutatenliste deiner Software
 **Software Bill of Materials (SBOM)** ist eine detaillierte Liste aller Komponenten, Bibliotheken und Abhängigkeiten, die in deiner Anwendung stecken. Stell Dir vor, es ist wie die Zutatenliste auf einem Lebensmittel: Ohne sie weißt du nicht, was wirklich drin ist – und ob etwas Gefährliches dabei sein könnte.
 
 ## Praxisbeispiel: Log4Shell mit SBOM
