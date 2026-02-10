@@ -19,9 +19,11 @@ In meinem letzen [Blog-Post](https://zahlenhelfer.github.io/2026/02/08/enableSer
 >`spec.enableServiceLinks: true` (Default) bewirkt, dass Kubernetes **automatisch Umgebungsvariablen mit Service‑Namen, IPs und Ports** aus dem Namespace in den Pod injiziert. 
 >
 >Beispiel:
->`kubectl exec nginx-pod -- env`
->`NGINX_SERVICE_SERVICE_HOST=10.96.117.78`
->`NGINX_SERVICE_SERVICE_PORT=80`
+>```shell
+>kubectl exec nginx-pod -- env
+>NGINX_SERVICE_SERVICE_HOST=10.96.117.78
+>NGINX_SERVICE_SERVICE_PORT=80
+>```
 ## Das Problem aus Sicht des IT-Grundschutz
 Durch das "magische" injitzieren von Umgebungsvariablen in Pods mit Service und Port Informationen gibt es eine ungewollte **Informationsoffenlegung** (interne Service‑Topologie). Das ist sicherheitsrelevant, denn Umgebungsvariablen sind:
 - **für jeden Prozess im Container lesbar**
