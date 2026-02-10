@@ -84,4 +84,4 @@ spec:
 			enableServiceLinks: false
 ```
 ## Zusammenfassung für Prüfer:innen
-Die Deaktivierung von `enableServiceLinks` dient der Reduktion unnötiger Informationsoffenlegung innerhalb von Kubernetes‑Pods und setzt die Anforderungen des BSI IT‑Grundschutzes (APP.4.4 Kubernetes, SYS.1.6 Containerisierung) um. Die Maßnahme per Policy-as-Code unterstützt das Least‑Privilege‑Prinzip, reduziert die Angriffsfläche und ist Bestandteil der standardisierten und auditierbaren Kubernetes‑Baseline.
+Die Deaktivierung von `enableServiceLinks` dient der Reduktion unnötiger Informationsoffenlegung innerhalb von Kubernetes‑Pods und setzt die Anforderungen des BSI IT‑Grundschutzes (APP.4.4 Kubernetes, SYS.1.6 Containerisierung) um. Diese Maßnahme per Policy-as-Code unterstützt das Least‑Privilege‑Prinzip, reduziert die Angriffsfläche und ist Bestandteil der standardisierten und auditierbaren Kubernetes‑Baseline. Manchmal können kleine Dinge grosses bewirken.
