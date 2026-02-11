@@ -13,11 +13,11 @@ render_with_liquid: "false"
 ![ContainerDaysLondon2026](assets/images/heisedevsec-logo.jpg)
 
 ### TLDR;
-- a wonderfull first start for this Format
+- sold out (1.300 people)
 - full packed agenda
-- co-hosting the MCP-Conf for
+- co-hosting the MCP-Confernce
 
-It is February and London is melting the snow with the hottest in Containers that are possible
+It is February and London is London. Heating up the rain with the hottest in Containers that is possible.
 
 ### Morning- 09am let´s start!
 Ab 9:00 Uhr ging die Akkreditierung los. Hier ging es mit einer 80% Polodichte, 5% Hoodies, 20% Business Casual los. Ich war gespannt, was das für die Themen bedeutete.
