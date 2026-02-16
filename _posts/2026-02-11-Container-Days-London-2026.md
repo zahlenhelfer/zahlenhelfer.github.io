@@ -13,14 +13,14 @@ render_with_liquid: "false"
 ![ContainerDaysLondon2026](assets/images/heisedevsec-logo.jpg)
 
 ### TLDR;
-- sold out (1.300 people)
+- sold out
 - full packed agenda
 - co-hosting the MCP-Confernce
 
-It is February and London is London. Heating up the rain with the hottest in Containers that is possible.
+It is February and London is showing some rain for us tourists, but luckeliy for us heating up the rain with the hottest in Containers that is possible.
 
 ### Morning- 09am let´s start!
-Ab 9:00 Uhr ging die Akkreditierung los. Hier ging es mit einer 80% Polodichte, 5% Hoodies, 20% Business Casual los. Ich war gespannt, was das für die Themen bedeutete.
+At 9am the the usual register part of .
 ### 09:15 - Die Keynote
 Eröffnet wurde mit einer Keynote von **Andreas Kind**, er ist VP of Cybersecurity & Trust bei Siemens. Dabei habe ich sehr viel über Industrielle IT gelernt. Der Satz: "Eine Weiche bei der Bahn ist im Schnitt 30 Jahre im Einsatz, wie machen Sie da Software/Firmware-Updates?", blieb mir stark in Erinnerung!
 ### 10:30 - 11:15 - [IT-Grundschutz trifft Kubernetes: Praxisnahe Umsetzung sicherheitsrelevanter Anforderungen](https://www.heise-devsec.de/veranstaltung-83764-0-it-grundschutz-trifft-kubernetes-praxisnahe-umsetzung-sicherheitsrelevanter-anforderungen.html)
