@@ -10,55 +10,36 @@ permalink: /:year/:month/:day/:title:output_ext
 published: false
 render_with_liquid: "false"
 ---
-![ContainerDaysLondon2026](assets/images/heisedevsec-logo.jpg)
+![ContainerDaysLondon2026](assets/images/cds_london.jpg)
 
 ### TLDR;
 - sold out
-- full packed agenda
-- co-hosting the MCP-Confernce
+- full packed agenda with container/kubernetes topics
+- co-hosting the first MCP-Confernce!
 
-It is February and London is showing some rain for us tourists, but luckeliy for us heating up the rain with the hottest in Containers that is possible.
-
-### Morning- 09am let´s start!
-At 9am the the usual register part of .
-### 09:15 - Die Keynote
-Eröffnet wurde mit einer Keynote von **Andreas Kind**, er ist VP of Cybersecurity & Trust bei Siemens. Dabei habe ich sehr viel über Industrielle IT gelernt. Der Satz: "Eine Weiche bei der Bahn ist im Schnitt 30 Jahre im Einsatz, wie machen Sie da Software/Firmware-Updates?", blieb mir stark in Erinnerung!
-### 10:30 - 11:15 - [IT-Grundschutz trifft Kubernetes: Praxisnahe Umsetzung sicherheitsrelevanter Anforderungen](https://www.heise-devsec.de/veranstaltung-83764-0-it-grundschutz-trifft-kubernetes-praxisnahe-umsetzung-sicherheitsrelevanter-anforderungen.html)
-Nach einer guten Kaffeepause ging es dann weiter. Aber hier kann ich wenig schreiben ausser einfach **Danke**, denn wir hatten unseren Vortrag zum IT-Grundschutz und Kubernetes in der Praxis.
-Ich habe mich dabei sehr über das Wiedersehen mit ___ , meinem Lektor vom dPunkt-Verlag gefreut. Er hat durch den Tag moderiert und uns auch angesagt. 
-
-Wir haben in diesem Vortrag gezeigt, wie sich Anforderungen aus dem BSI-IT-Grundschutzkatalog konkret in Kubernetes-Umgebungen umsetzen lassen. Dabei wurden drei echte Implementierungen von IT-Grundschutz-Bausteinen für Kubernetes gezeigt. Zusätzlich haben wir noch die Gelegenheit genutzt, dass Thema SBOM aus dem TR-XXX zu erläutern. Dabei wurde das Tool [Central Cyclone](https://github.com/BjarneRentz/central-cyclone) von meinem Kollegen Bjarne Rentz vorgestellt. .Es automatisiert die zentrale SBOM-Erstellung (Software Bill of Materials) ohne dabei in die jeweiligen Entwickler-Pipelines eingreifen zu müssen. Ausserdem Danke 🙏 an alle Teilnehmer die uns die ganze Zeit mit wirklich wachen Augen, einem tollen Q&A durch den Vortrag gefolgt sind. Es folgten auch gute Gespräche im Nachgang.
-
-### 13:15 - 14:00 [Können wir der Zero in Zero Trust vertrauen?](https://www.heise-devsec.de/veranstaltung-83498-0-koennen-wir-der-zero-in-zero-trust-vertrauen.html)
-Thomas Fricke zeigte in seinem Vortrag gekonnt was Burgen und die Historie bzw. Geschichte mit Zero Trust gemeinsam haben. Was ist Trusted Base Computing und ist der Begriff bereits verbrannt. Ein prima Queerschnitt wie war es bisher (Zonen-Konzept) und wie ist es bei Zero Trust (vertraue niemanden). Aber zu Denken gab mir natürlich die Frage: Was ist wenn wir alles befolgen, aber weiterhin die Chips für Computer, Netzwerk und GPUs aus Amerika und Asien kommen. Helfen uns dann europäische Clouds, wenn die Hardware vielleicht schnüffelt - **vorsicht Aluhut**.
-### 14:15 - 15:00 [Zero Trust mit Keycloak: Wie man IAM sicher in Microservices-Architekturen integriert](https://www.heise-devsec.de/veranstaltung-83533-0-zero-trust-mit-keycloak-wie-man-iam-sicher-in-microservices-architekturen-integriert.html)
-Mit dem Vortrag hiess es für mich, back to the Root. Ich fühlte mich ein wenig an meine Uni-Zeit erinnert. Volle Konzentration, und ab der Mitte der "Vorlesung" nicht Schwächeln und weiter mitdenken.
-
-### 15:30-16:15 [Protectors of the Realm: Wie man einen Keycloak sicher hält](https://www.heise-devsec.de/veranstaltung-83534-0-protectors-of-the-realm-wie-man-einen-keycloak-sicher-haelt.html)
-Wenn es einen Vortrag gab, den wir direkt Umsetzen konnten, dann den kcwarden()  von Max Maaß & Tim Walter. 
-### 17:30-22:00 Uhr - Thementische & Get-together
-Ja auch das darf nicht Fehlen.
-### Tag 2
-
-### 09:00 - 9:45 [LLM im Geheimdienst ihrer Majestät](https://www.heise-devsec.de/veranstaltung-83543-0-llm-im-geheimdienst-ihrer-majestaet.html)
-Mit so einem Vortrag starte ich gerne in den 2. Tag. Stefan Schlott brachte gekonnt Unterhaltung und Gefahren der KI übereinander. Was nehme ich besonder mit?
-> weisser Text auf weissem Grund im PDF - dein LLM liebt es!
-
-### 10:00 - 10:45 [Effektive und effiziente Bedrohungsanalyse in zeiten knapper Budgets](https://www.heise-devsec.de/veranstaltung-83781-0-effektive-und-effiziente-bedrohungsanalyse-in-zeiten-knapper-budgets.html)
-Effektive und effiziente Bedrohungsanalyse in zeiten knapper Budgets
-### 11:15 - 12:00 [Warum JSON Web Tokens selten die Antwort sind](https://www.heise-devsec.de/veranstaltung-83850-0-warum-json-web-tokens-selten-die-antwort-sind.html)
-Arne Blankerts brachte in diesem Vortrag alles zusammen.
-### 13:00 - 13:45 [Keynote: Vergesst MFA — gebt mir Passkeys!](https://www.heise-devsec.de/veranstaltung-85671-0-keynote-vergesst-mfa-%E2%80%94-gebt-mir-passkeys.html)
-The one and only Jürgen Schmidt von heiseSecurity zeigt einfach mal wie Einfach Passkeys sind, aber vor allem wobei Sie helfen. Und ich bin ganz ehrlich - als in der Demo das Microsoft-Login Fenster kam habe ich nicht sofort auf die URL geschaut. Phisching ist halt immer noch doof.
-### 14:00 - 14:45 [Das TPM und Du: Wie man das TPM tatsächliche verwenden kann](https://www.heise-devsec.de/veranstaltung-83755-0-das-tpm-und-du-wie-man-das-tpm-tatsaechliche-verwenden-kann.html)
-Mathias Tausig hat mir endlich mal erklärt was dieses TPM eigentlich ist.
-
-### 15:15 - 16:00 [Kugelsichere Software mit formalen Methoden](https://www.heise-devsec.de/veranstaltung-83802-0-kugelsichere-software-mit-formalen-methoden.html)
-Dieser Vortrag zeigt mir mal wieder meine Grenzen auf. Michael Sperber hat mir Isabelle vorgestellt und wie formale Methoden Software verbessern kann. 
-## Summary
-Ich wusste nicht, wird es eine deutsche DefCon oder eher ein Management-Veranstaltung. Aber [heise](https://www.heisedevsec.de) war der Veranstalter, was soll da schief gehen.
-Fest steht: Ich komme gerne nächstes Jahr wieder!
-
+It is February and London is showing some rain for us. As a german located in Hamburg, it´s no big deal for me.  Luckeliy for all others that are more sunnshine minded the containerdays in London where heating up the rain with the hottest in Container-technology that is possible.
+### Good Morning - 9am let´s start!
+As usual, it started with the register part and picking up your badge. The first surprise - no conference-shirt, but a cool beanie with the logo. I need to admin, after getting comfy with the orange I really like it and wear it as often as I can. A huge thank you to the organizers.
+### The keynote - that I missed :(
+The keynote was held by - [Amanda Brock](https://www.containerdays.io/containerdays-london-2026/agenda/#) with the topic "Open Source powering the Digital Economy!". I need to admit, I was into conversations in the exhibition-area that I missed it - really sorry.
+### Yet another conference?
+Going through all topics would be far to long and detailed. I like to point out some special Speakers and Sessions that standout and left a lasting impression:
+### 𝗙𝗿𝗼𝗺 𝗖𝗼𝗻𝗰𝗲𝗿𝘁 𝗛𝗮𝗹𝗹 𝘁𝗼 𝗖𝗼𝗱𝗲 𝗥𝗲𝘃𝗶𝗲𝘄: 𝗦𝘆𝗺𝗽𝗵𝗼𝗻𝘆 𝘁𝗼 𝗦𝗼𝗳𝘁𝘄𝗮𝗿𝗲 - [Sarah Peters](https://www.linkedin.com/in/sarahnpeters/)  
+I’m at a loss for words—music and software development have more in common than you’d think! If you get the chance to see Sarah speak, take it. It’s mind-blowing.    
+### 𝗜𝗻𝗳𝗿𝗮𝘀𝘁𝗿𝘂𝗰𝘁𝘂𝗿𝗲 𝗮𝘀 𝗖𝗼𝗱𝗲 𝗶𝘀 𝗦𝘁𝗶𝗹𝗹 𝗖𝗼𝗱𝗲 – 𝗪𝗵𝘆 𝗗𝗼𝗻’𝘁 𝗪𝗲 𝗧𝗿𝗲𝗮𝘁 𝗜𝘁 𝗧𝗵𝗮𝘁 𝗪𝗮𝘆? - [Pieter Vincken](https://www.linkedin.com/in/pieter-vincken/)  
+This talk reminded me to channel my inner coding monk more often. IaC is software development. Thank you, Pieter, for the wake-up call! 
+### 𝗪𝗵𝗲𝗻 𝘁𝗼 𝗪𝗿𝗶𝘁𝗲 𝗮 𝗞𝘂𝗯𝗲𝗿𝗻𝗲𝘁𝗲𝘀 𝗢𝗽𝗲𝗿𝗮𝘁𝗼𝗿 – 𝗮𝗻𝗱 𝗛𝗼𝘄 𝘁𝗼 𝗗𝗼 𝗜𝘁 𝗥𝗶𝗴𝗵𝘁 - [Michael Schmitt](https://www.linkedin.com/in/michael-schmitt-ist-cool/) 
+Ever considered writing an operator? Get Michael’s advice before you start. Thanks, for sharing valuable insights! 
+### 𝗕𝗲𝘆𝗼𝗻𝗱 𝗗𝗼𝗰𝗸𝗲𝗿 𝗕𝘂𝗶𝗹𝗱𝘀: 𝗗𝗲𝗰𝗹𝗮𝗿𝗮𝘁𝗶𝘃𝗲, 𝗥𝗲𝗽𝗿𝗼𝗱𝘂𝗰𝗶𝗯𝗹𝗲, 𝗮𝗻𝗱 𝗦𝗲𝗰𝘂𝗿𝗲 𝗢𝗖𝗜 𝗖𝗼𝗻𝘁𝗮𝗶𝗻𝗲𝗿𝘀 𝘄𝗶𝘁𝗵 𝗡𝗶𝘅 - [Arik Grahl](https://www.linkedin.com/in/arikgrahl/)  
+Let’s challenge the status quo. Building OCI containers differently and getting familiar with Nix - thank you, Arik, for this fresh perspective!
+### 𝗭𝗲𝗿𝗼 𝗧𝗿𝘂𝘀𝘁 𝗳𝗼𝗿 𝗔𝗣𝗜𝘀: 𝗙𝗿𝗼𝗺 𝗘𝗱𝗴𝗲 𝘁𝗼 𝗠𝗲𝘀𝗵 𝘄𝗶𝘁𝗵 𝗜𝘀𝘁𝗶𝗼 – [Hannah Olukoye](https://www.linkedin.com/in/hannaholukoye/) & 𝘔𝘰𝘧𝘦𝘴𝘰𝘭𝘢 𝘉𝘢𝘣𝘢𝘭𝘰𝘭𝘢  
+If you’ve ever wondered about the "castle-and-moat" model, why you’d use a service mesh like Istio, or how Ztunnel works with SPIFFE identities—this was the talk for you. A fantastic technical deep dive into Zero Trust. Thank you both!
+### 𝗙𝗮𝗻𝘁𝗮𝘀𝘁𝗶𝗰 𝗘𝘅𝗽𝗹𝗼𝗶𝘁𝘀 𝗮𝗻𝗱 𝗪𝗵𝗲𝗿𝗲 𝘁𝗼 𝗙𝗶𝗻𝗱 𝗧𝗵𝗲𝗺 - [Nigel Douglas](https://www.linkedin.com/in/nigel-douglas-devrel/) 
+If you only think about CVEs and CVSS scores, you’re only halfway there. Nigel took us on a technical deep dive into exploitability, mixing EPSS, CISA KEV, and Exploit-DB. Always a pleasure to see you speak, Nigel!  
+### 𝗘𝘅𝗽𝗹𝗼𝗿𝗶𝗻𝗴 𝗪𝗔𝗦𝗠 𝗼𝗻 𝗞𝘂𝗯𝗲𝗿𝗻𝗲𝘁𝗲𝘀 - [Frederik Pietzko](https://www.linkedin.com/in/frederik-pietzko/) 
+I’ll admit—I was skeptical. My only experience with WebAssembly was in browser canvases. But this session was well worth the time! WASM in Kubernetes/containerd could be a game-changer. Seeing 200 pods spin up in a minute on a standard laptop? Impressive. Let’s see where this goes—thank you, Frederik!  
   
-
-- Protecting the Keycloak Realm 🔑 (Dr. Max Maass & Tim Walter): Must-have tips for securing Keycloak, featuring their helpful tool kcwarden (https://lnkd.in/dxkP7JGJ).
+### And of course a special shoutout to my colleague [Bjarne Valentin Rentz](https://www.linkedin.com/in/bjarne-valentin-rentz/), who delivered the talk "𝗙𝗿𝗼𝗺 𝗖𝗼𝗺𝗽𝗹𝗶𝗮𝗻𝗰𝗲 𝘁𝗼 𝗖𝗼𝗱𝗲: 𝗧𝗵𝗲 𝗖𝘆𝗯𝗲𝗿 𝗥𝗲𝘀𝗶𝗹𝗶𝗲𝗻𝗰𝗲 𝗔𝗰𝘁 (𝗖𝗥𝗔), 𝗦𝗕𝗢𝗠𝘀, 𝗗𝗲𝘃𝗧𝗲𝗮𝗺𝘀, 𝗮𝗻𝗱 𝗬𝗢𝗨!" with me. Always a blast performing with you on stage!
+## Summary
+I was unsure at the beginning - is it just another ContainerDays franchise (I was used to Container-Days Hamburg, Germany) or is really something unique and different. After these two days I can  clearly say - Containerdays London is a unique event and should be something that you 
+Thanks for having me there - if you want I would come back next year for sure :)
