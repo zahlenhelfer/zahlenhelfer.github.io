@@ -2,7 +2,7 @@
 layout: post
 title: It has to start somewhere...or just Hello World
 category: general
-tags: hello blog music
+tags:
 permalink: /:year/:month/:day/:title:output_ext
 ---
 
