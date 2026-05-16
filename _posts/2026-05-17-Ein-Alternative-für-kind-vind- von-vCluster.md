@@ -1,15 +1,41 @@
 ---
 layout: post
-title: "Tip: Trivy mit Podman auf macOS nutzen - ein Buchstabe ändert alles"
+title: "Tip: vind - Die Alternative für kind?"
 category: kubernetes
 tags:
   - blog
   - de
 permalink: /:year/:month/:day/:title:output_ext
-published: true
+published: false
 render_with_liquid: "false"
 ---
-## Das Problem: Podman ist installiert und Trivy läuft nicht mehr
+
+## Install vcluster
+```shell
+brew install loft-sh/tap/vcluster
+```
+
+## Set Docker as the driver
+```perl
+vcluster use driver docker
+```
+
+## Erster Cluster
+```shell
+vcluster create my-cluster
+```
+
+
+# Eine bestimmte Version
+```shell
+vcluster create old-cluster \
+  --set controlPlane.distro.k8s.version=v1.32.0
+```
+
+
+
+
+## Das Problem: Einen lokalen Kubernetes-Cluster, aber mit Persistenz.
 Du hast den Docker Desktop deinstalliert, Podman installiert, einen Alias  gesetzt (`alias docker=podman`) - und alles scheint zu funktionieren. Dann startest Du Trivy zur Schwachstellenanalyse:
 ```shell
 $ trivy image mein-image:1.0
