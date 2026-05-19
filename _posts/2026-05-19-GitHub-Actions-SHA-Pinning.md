@@ -8,7 +8,7 @@ tags:
   - github
   - security
   - devsecops
-published: false
+published: true
 render_with_liquid: "false"
 permalink: /:year/:month/:day/:title:output_ext
 ---
@@ -43,23 +43,25 @@ Statt eines Tags (mutable) nutzt Du den 40 Zeichen langen Commit-SHA. Dieser ist
 
 Den Versions-Tag als Kommentar dran lassen - dann sieht man auf einen Blick, welche Version eigentlich gemeint ist. Dependabot und Renovate können mit genau diesem Kommentar arbeiten und schicken Dir saubere PRs, wenn eine neue Version raus ist.
 
-## Und warum jetzt? Weil GitHub das jetzt auch erzwingen kann
+## Und warum jetzt? Weil GitHub das auch erzwingen kann!
 
-Seit August 2025 gibt es in den **Allowed-Actions-Policies** auf Org- und Enterprise-Ebene eine Checkbox, die SHA-Pinning **erzwingt**. Wer dann noch `@v4` schreibt, dessen Workflow scheitert beim Start - sauber, mit Fehlermeldung, ohne Diskussion. Wenn Du in einem Konzernumfeld arbeitest, ist es nur eine Frage der Zeit, bis die Security-Abteilung diesen Schalter umlegt. Besser, Deine Workflows sind dann schon vorbereitet.
+Seit August 2025 gibt es in den **Allowed-Actions-Policies** auf Org- und Enterprise-Ebene eine Checkbox, die SHA-Pinning **erzwingt**, siehe [GithubBlog-Post](https://github.blog/changelog/2025-08-15-github-actions-policy-now-supports-blocking-and-sha-pinning-actions/). Wer dann noch `@v4` schreibt, dessen Workflow scheitert beim Start - sauber, mit Fehlermeldung, ohne Diskussion. Wenn Du in einem Konzernumfeld arbeitest, ist es nur eine Frage der Zeit, bis die Security-Abteilung diesen Schalter umlegt. Besser, deine Workflows sind dann schon vorbereitet.
 
-Dazu kommt: Wer BSI-Grundschutz oder NIS2 ernst nimmt (siehe meine Posts dazu), kommt um die Frage "Wie stellst Du sicher, dass Deine CI/CD-Supply-Chain integer ist?" nicht herum. SHA-Pinning ist da kein Nice-to-have, sondern ein dokumentierbares Kontrollmittel.
+Dazu kommt: Wer BSI-Grundschutz oder NIS2 ernst nimmt (siehe meine Posts dazu), kommt um die Frage "Wie stellst Du sicher, dass Deine CI/CD-Supply-Chain sicher bzw. integer ist?" nicht herum. SHA-Pinning ist kein Nice-to-have, sondern ein dokumentierbares Kontrollmittel!
 
 ## Ein Beispiel: Migration in der Praxis
 
-Manuell ist das in jedem nicht-trivialen Repo eine Strafe. Drei Tools, die das übernehmen:
+Manuell ist das in jedem nicht trivialen Repo eine Strafe. Hier aber drei Tools, die Dir helfen können:
 
-**1. `pinact`** - CLI-Tool, ersetzt Tags durch SHAs in einem Rutsch:
+**1. `[pinact](https://github.com/suzuki-shunsuke/pinact)`** - CLI-Tool, ersetzt Tags durch SHAs in einem Rutsch:
 
 ```bash
-brew install suzuki-shunsuke/pinact/pinact
-pinact run
-# fertig - Workflow-Dateien sind gepinnt, Versions-Kommentare gesetzt
+# Installieren
+$ brew install suzuki-shunsuke/pinact/pinact
+# Starten
+$ pinact run
 ```
+Nach dem Ausführen ist alles fertig - Workflow-Dateien sind gepinnt, Versions-Kommentare gesetzt.
 
 **2. Die Action `zgosalvez/github-actions-ensure-sha-pinned-actions`** - läuft als erster Job in Deinem CI und bricht ab, wenn jemand einen Tag committet:
 
@@ -71,9 +73,9 @@ pinact run
       aws-actions/
 ```
 
-So bleiben Deine Workflows auch in Zukunft sauber, ohne dass Du in jedem Review danach gucken musst.
+So bleiben Deine Workflows auch in Zukunft sauber, ohne dass Du in jedem Review danach schauen musst.
 
-**3. Dependabot** - die `dependabot.yml`, die Du eh schon hast, kümmert sich auch um GitHub-Actions-Updates:
+**3. Dependabot** - die `dependabot.yml`, die Du eh schon hast ([Dependabot-Blog-Post](https://zahlenhelfer.github.io/2025/05/30/Dependabot-mit-Helm-Charts.html)), kümmert sich auch um GitHub-Actions-Updates:
 
 ```yaml
 version: 2
@@ -84,11 +86,11 @@ updates:
       interval: "weekly"
 ```
 
-Damit bekommst Du wöchentlich PRs, die die SHAs auf den jeweils neuesten Tag-Stand heben - mit Diff, mit Changelog, mit Review.
+Damit bekommst Du wöchentlich PRs, die die SHAs auf den jeweils neuesten Tag-Stand heben - mit Diff, Changelog und Review.
 
 ## Fazit
 
-Tags sind bequem, aber sie sind beweglich. SHAs sind unbequem, aber sie sind ehrlich. Nach `tj-actions` gibt es eigentlich keine vernünftige Ausrede mehr, in produktiven Workflows noch `@v4` stehen zu haben. Die Tools, die einem die Arbeit abnehmen, sind alle da. Der Aufwand für ein mittelgroßes Repo liegt bei einer halben Stunde - inklusive Kaffee.
+Tags sind bequem, aber beweglich. SHAs sind unbequem, aber ehrlich. Nach `tj-actions` gibt es eigentlich keine vernünftige Ausrede mehr, in produktiven Workflows noch `@v4` zu verwenden. Die Tools, die einem die Arbeit abnehmen, sind alle da. Der Aufwand für ein mittelgroßes Repo liegt bei einer halben Stunde - inklusive Kaffee.
 
 Und falls Du das jetzt liest und denkst "machen wir nächstes Quartal": Genau das hat im März 2025 viele Teams in eine sehr lange Woche geschickt.
 
