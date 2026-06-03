@@ -16,8 +16,9 @@ published: false
 render_with_liquid: "false"
 permalink: /:year/:month/:day/:title:output_ext
 ---
-
-Bei meinen Trainings richten wir natürlich irgendwann `cert-manager` ein. Es muss ja schließlich keiner mehr mit `openssl` selbstsignierte Zertifikate nutzen. Daher fällt die Wahl auf den `ClusterIssuer` für Let's Encrypt leicht. Eine Ingress-Annotation, und der Cluster holt sich seine TLS-Zertifikate selbst inkl. Ablage in ein Secret. Klappt - meistens. Dann sitzt jemand aus einem Unternehmen dabei der mir sagt "das Rating bei [sslLabs](https://www.ssllabs.com/ssltest) könnte aber besser sein. Im Cluster ist alles richtig konfiguriert und sogar der Klassiker `xyz`steht im Issuer. Das Problem liegt woanders.
+Bei meinen Trainings richten wir natürlich irgendwann `cert-manager` ein. Es muss ja schließlich keiner mehr mit `openssl` selbstsignierte Zertifikate nutzen. Daher fällt die Wahl auf den `ClusterIssuer` für Let's Encrypt leicht. Eine Ingress-Annotation (`cert-manager.io/issuer`), und der Cluster holt sich seine TLS-Zertifikate selbst inkl. Ablage in einem Secret sowie automatisches Rotieren. Klappt prima. Dann sitzt jemand aus einem Unternehmen dabei der mir sagt "das Rating bei [sslLabs](https://www.ssllabs.com/ssltest) könnte aber besser sein.
+<TODO: Bild>
+Im Cluster ist alles richtig konfiguriert und sogar der Klassiker `xyz`steht im Issuer. Das Problem liegt woanders.
 ## TL:DR;
 - es darf **jede** öffentliche CA für Deine Domain ausstellen
 - ein CAA-Record begrenzt das auf die, die Du wirklich nutzt
@@ -92,18 +93,13 @@ kubectl get certificate
 kubectl describe order <name>
 # ... CAA record for example.org prevents issuance
 ```
-
 Kein Cluster-Problem. Eine fehlende Zeile im DNS.
 
 ## Zusammenfassung
 
-Was hängen bleibt:
-
 1. Per Default darf **jede** öffentliche CA für Deine Domain ausstellen. Ein CAA-Record schränkt das auf die ein, die Du wirklich nutzt.
-2. Seit September 2017 **müssen** regelkonforme CAs CAA beachten — der Record wirkt also. Aber nur gegen regelkonforme CAs; ein harter Riegel ist er nicht.
-3. Für cert-manager und Let's Encrypt heißt das konkret: `letsencrypt.org` gehört in
-   den CAA-Record, sonst scheitert die ACME-Order mit einem CAA-Fehler. Der Fix
-   liegt im DNS, nicht im Cluster.
+2. Seit September 2017 **müssen** regelkonforme CAs CAA beachten - der Record wirkt also. Aber nur gegen regelkonforme CAs; ein harter Riegel ist er nicht.
+3. Für cert-manager und Let's Encrypt heißt das konkret: `letsencrypt.org` gehört in den CAA-Record, sonst scheitert die ACME-Order mit einem CAA Fehler. Der Fix liegt im DNS, nicht im Cluster.
 4. `dig CAA` zeigt Dir, was wirklich da steht; SSL Labs bestätigt es von außen.
 
 Denkt mal für Euch durch, wer eigentlich für Eure Domains ein Zertifikat ausstellen dürfte - und ob das wirklich nur die sind, die Ihr kennt.
