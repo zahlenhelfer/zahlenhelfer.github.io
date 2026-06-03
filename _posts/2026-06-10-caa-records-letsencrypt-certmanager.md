@@ -106,8 +106,7 @@ Was hängen bleibt:
    liegt im DNS, nicht im Cluster.
 4. `dig CAA` zeigt Dir, was wirklich da steht; SSL Labs bestätigt es von außen.
 
-Denkt mal für Euch durch, wer eigentlich für Eure Domains ein Zertifikat ausstellen
-dürfte — und ob das wirklich nur die sind, die Ihr kennt.
+Denkt mal für Euch durch, wer eigentlich für Eure Domains ein Zertifikat ausstellen dürfte - und ob das wirklich nur die sind, die Ihr kennt.
 
 ---
 
