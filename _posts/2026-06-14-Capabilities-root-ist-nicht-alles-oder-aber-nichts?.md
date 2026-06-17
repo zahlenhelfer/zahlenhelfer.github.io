@@ -5,7 +5,7 @@ categories: [kubernetes]
 tags: [k8s, linux, kernel, capabilities, nginx, containerd, security, de]
 mermaid: true
 published: false
-render_with_liquid: "false"
+render_with_liquid: true
 permalink: /:year/:month/:day/:title:output_ext
 ---
 
