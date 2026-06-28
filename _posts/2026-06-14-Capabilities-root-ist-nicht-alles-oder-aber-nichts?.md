@@ -21,9 +21,6 @@ permalink: /:year/:month/:day/:title:output_ext
 Im letzten Post zu [Kernel, Container und Kubernetes](https://zahlenhelfer.github.io/2026/06/04/kernel-container-kubernetes-die-herausforderung.html) habe ich am Ende einen kleinen Cliffhänger eingebaut: seccomp filtert, *welche* Syscalls ein Prozess absetzen darf - rund 44 sind im containerd-Default-Profil hart gesperrt, gut 300 bleiben offen. Aber "offen" ist nicht dasselbe wie "funktioniert".
 
 Denn von den erlaubten Syscalls sind im Default-Profil **47 nur dann freigeschaltet, wenn der Prozess die passende Capability hält**. Sie sind nicht hart verboten, sondern *Capability-gated*. Und genau das ist das Thema diesmal: Was Capabilities sind, welche vierzehn davon containerd jedem Container schenkt, und warum der `nginx`-User im offiziellen Image existiert - und trotzdem noch als `root` gestartet wird, leider!
-
-> DISCLAIMER: Ich bin weder Auditor noch Anwalt - daher keine Gewähr! Der Grundschutz-Abschnitt weiter unten ist mein Lese-Eindruck aus den Bausteinen, kein Audit-Statement.
-
 ## Das Problem: Unterschied zwischen "darf den Syscall" und "darf die Aktion" machen
 
 Bei meinen Trainings kommt an dieser Stelle fast immer dieselbe Rückfrage: Wenn der Container eh als `root` läuft - wozu dann noch der ganze Capability-"Kram"?
