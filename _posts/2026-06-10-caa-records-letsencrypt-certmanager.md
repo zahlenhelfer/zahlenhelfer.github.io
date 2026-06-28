@@ -12,15 +12,19 @@ tags:
   - letsencrypt
   - security
   - de
-published: false
+published: true
 render_with_liquid: "false"
 permalink: /:year/:month/:day/:title:output_ext
 ---
-Bei meinen Trainings richten wir natürlich irgendwann den `cert-manager` ein. Es muss ja schließlich keiner mehr mit `openssl` selbstsignierte Zertifikate nutzen. Daher fällt die Wahl auf den `ClusterIssuer` für Let's Encrypt leicht. Eine Ingress-Annotation (`cert-manager.io/issuer`), und der Cluster holt sich seine TLS-Zertifikate selbstständig inkl. Ablage in einem Secret sowie automatischem Rotieren bzw. Re-Issue. Klappt prima. Dann sitzt jemand aus einem Unternehmen dabei der mir sagt "das Rating bei [sslLabs](https://www.ssllabs.com/ssltest) könnte aber besser sein.
+Bei meinen Trainings richten wir natürlich irgendwann den `cert-manager` ein. Es muss ja schließlich keiner mehr mit `openssl` selbstsignierte Zertifikate nutzen. Daher fällt die Wahl auf den `ClusterIssuer` für Let's Encrypt leicht. Eine Ingress-Annotation (`cert-manager.io/issuer`), und der Cluster holt sich seine TLS-Zertifikate selbstständig inkl. Ablage in einem Secret sowie automatischem Rotieren bzw. Re-Issue. Klappt prima. Dann sitzt jemand aus einem Unternehmen dabei der mir sagt "das Rating bei [sslLabs](https://www.ssllabs.com/ssltest) könnte aber besser sein - stimmt nach A kommt noch A+.
 
-<TODO: Bild>
+![SSL-Labs](assets/images/ssllabs-score-a.png)
 
-Im Cluster ist alles richtig konfiguriert und sogar der Klassiker [`tlsserver`](https://letsencrypt.org/docs/profiles/#tlsserver) steht im Issuer. Das Problem liegt woanders und wir dachten es ist der CAA - __Spoiler__: ist er nicht - aber alles zu seiner Zeit. Nun erstmal was ist der CAA?!
+Im Cluster ist alles richtig konfiguriert und sogar der Klassiker [`tlsserver`](https://letsencrypt.org/docs/profiles/#tlsserver) steht im Issuer. Das Problem liegt woanders und wir dachten es ist der fehlende CAA.
+
+![SSL-Labs-CAA-Not-Found](assets/images/ssllabs-caa-no.png)
+
+__Spoiler__: er ist es nicht - aber alles zu seiner Zeit, nun erstmal was ist der CAA?!
 ## TL:DR;
 - es darf **jede** öffentliche CA für Deine Domain ausstellen
 - ein CAA-Record begrenzt das auf die, die Du wirklich nutzt
@@ -63,7 +67,9 @@ example.org.   CAA   0 issue "letsencrypt.org"
 example.org.   CAA   0 iodef "mailto:security@example.org"
 ```
 
-In den meisten DNS-Oberflächen - auch bei DigitalOcean, wo meine Cluster für Trainings meistens liegen - gibt es dafür einen eigenen Record-Typ `CAA` mit den Feldern *Flags*, *Tag* und dem Wert ([Quelle: DigitalOcean](https://docs.digitalocean.com/products/networking/dns/how-to/create-caa-records/)). Auf die Registered Domain gesetzt, gilt der Record für die Domain und alle Subdomains.
+In den meisten DNS-Oberflächen - auch bei DigitalOcean, wo meine Cluster für Trainings meistens liegen - gibt es dafür einen eigenen Record-Typ `CAA` mit den Feldern *Flags*, *Tag* und dem Wert ([Quelle: DigitalOcean](https://docs.digitalocean.com/products/networking/dns/how-to/create-caa-records/)). 
+![DO-DNS](assets/images/do-dns-caa.png)
+Auf die Registered Domain gesetzt, gilt der Record für die Domain und alle Subdomains.
 
 **2. Prüfen mit `dig`.** Bevor Du irgendwo weiterklickst - erst nachsehen, was im DNS wirklich steht:
 
@@ -74,6 +80,8 @@ dig CAA example.org +short
 ```
 
 **3. Von außen bestätigen lassen.** Der [SSL Server Test von Qualys SSL Labs](https://www.ssllabs.com/ssltest/) zeigt im Report eine Zeile **DNS CAA**. Steht da `Yes`, ist Dein Record veröffentlicht und von außen sichtbar - der Gegencheck, dass nicht nur Dein lokaler Resolver ihn sieht.
+
+![SSL-Labs-CAA-Found](assets/images/ssllabs-caa-yes.png)
 
 Und damit zurück zum Cluster: Sobald `letsencrypt.org` im CAA-Record steht, läuft die ACME-Order von `cert-manager` durch die CAA-Prüfung, und das Zertifikat wird ausgestellt. Fehlt der Eintrag, bricht die Order ab - und der Fehler aus dem Trainings-Beispiel oben wird konkret:
 
