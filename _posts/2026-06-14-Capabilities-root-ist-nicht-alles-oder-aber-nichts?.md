@@ -5,24 +5,21 @@ categories: [kubernetes]
 tags: [k8s, linux, kernel, capabilities, nginx, containerd, security, de]
 mermaid: true
 published: false
-render_with_liquid: true
+render_with_liquid: "false"
 permalink: /:year/:month/:day/:title:output_ext
 ---
 
-Im letzten Post zu [Kernel, Container und Kubernetes](https://zahlenhelfer.github.io/2026/06/04/kernel-container-kubernetes-die-herausforderung.html) habe ich am Ende einen Faden liegen lassen: seccomp filtert, *welche* Syscalls ein Prozess absetzen darf - rund 44 sind im containerd-Default-Profil hart gesperrt, gut 300 bleiben offen. Aber "offen" ist nicht dasselbe wie "funktioniert".
+Im letzten Post zu [Kernel, Container und Kubernetes](https://zahlenhelfer.github.io/2026/06/04/kernel-container-kubernetes-die-herausforderung.html) habe ich am Ende einen kleinen Cliffhänger eingebaut: seccomp filtert, *welche* Syscalls ein Prozess absetzen darf - rund 44 sind im containerd-Default-Profil hart gesperrt, gut 300 bleiben offen. Aber "offen" ist nicht dasselbe wie "funktioniert".
 
 Denn von den erlaubten Syscalls sind im Default-Profil **47 nur dann freigeschaltet, wenn der Prozess die passende Capability hält**. Sie sind nicht hart verboten, sondern *Capability-gated*. Und genau das ist das Thema diesmal: Was Capabilities sind, welche vierzehn davon containerd jedem Container schenkt, und warum der `nginx`-User im offiziellen Image existiert - und trotzdem noch als `root` gestartet wird, leider!
 
-> DISCLAIMER: Ich bin weder Auditor noch Anwalt - daher keine Gewähr! Der
-> Grundschutz-Abschnitt weiter unten ist mein Lese-Eindruck aus den Bausteinen,
-> kein Audit-Statement.
+> DISCLAIMER: Ich bin weder Auditor noch Anwalt - daher keine Gewähr! Der Grundschutz-Abschnitt weiter unten ist mein Lese-Eindruck aus den Bausteinen, kein Audit-Statement.
 
-## Das Problem: Unterschied "darf den Syscall" und "darf die Aktion" machen
+## Das Problem: Unterschied zwischen "darf den Syscall" und "darf die Aktion" machen
 
 Bei meinen Trainings kommt an dieser Stelle fast immer dieselbe Rückfrage: Wenn der Container eh als `root` läuft - wozu dann noch der ganze Capability-"Kram"?
 
-Die kurze Antwort: Weil `root` im Container längst nicht mehr der Allmächtige ist, für den ihn alle halten. Seit Kernel 2.2 ist die Macht von UID 0 in einzelne **Capabilities** zerlegt - kleine, abgegrenzte Privilegien, die man einzeln vergeben oder entziehen kann ([Quelle: capabilities(7)](https://man7.org/linux/man-pages/man7/capabilities.7.html)). Statt "root oder nicht root" gibt es heute gut 40 dieser Einzelrechte. Ein paar, die
-gleich wichtig werden:
+Die kurze Antwort: Weil `root` im Container längst nicht mehr der Allmächtige ist, für den ihn alle halten. Seit Kernel 2.2 ist die Macht von UID 0 in einzelne **Capabilities** zerlegt - kleine, abgegrenzte Privilegien, die man einzeln vergeben oder entziehen kann ([Quelle: capabilities(7)](https://man7.org/linux/man-pages/man7/capabilities.7.html)). Statt "root oder nicht root" gibt es heute gut 40 dieser Einzelrechte. Ein paar, die gleich wichtig werden:
 
 - `CAP_NET_BIND_SERVICE` - an Ports unter 1024 binden
 - `CAP_NET_RAW` - Raw- und Packet-Sockets (Ping, aber auch ARP- und DNS-Spoofing im Pod-Netz)
@@ -33,7 +30,7 @@ Ein Prozess kann eine einzelne Capability halten, ***ohne*** `root` zu sein. Und
 
 ## Die glorreichen vierzehn: Was containerd jedem Container schenkt
 
-Startest Du einen Container, vergibt containerd nicht etwa alle Capabilities oder keine, sondern einen festen Default-Satz. Es sind **vierzehn**, nachzulesen in `defaultUnixCaps()`([Quelle: containerd `pkg/oci/spec.go`](https://github.com/containerd/containerd/blob/main/pkg/oci/spec.go)):
+Startest Du einen Container, vergibt containerd nicht etwa alle Capabilities oder keine, sondern einen festen `Default-Satz`. Es sind **vierzehn**, nachzulesen in `defaultUnixCaps()`([Quelle: containerd `pkg/oci/spec.go`](https://github.com/containerd/containerd/blob/main/pkg/oci/spec.go)):
 
 ```text
 CAP_CHOWN            CAP_SETGID           CAP_NET_BIND_SERVICE
