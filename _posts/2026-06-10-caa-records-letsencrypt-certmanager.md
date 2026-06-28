@@ -16,7 +16,7 @@ published: false
 render_with_liquid: "false"
 permalink: /:year/:month/:day/:title:output_ext
 ---
-Bei meinen Trainings richten wir natürlich irgendwann `cert-manager` ein. Es muss ja schließlich keiner mehr mit `openssl` selbstsignierte Zertifikate nutzen. Daher fällt die Wahl auf den `ClusterIssuer` für Let's Encrypt leicht. Eine Ingress-Annotation (`cert-manager.io/issuer`), und der Cluster holt sich seine TLS-Zertifikate selbst inkl. Ablage in einem Secret sowie automatisches Rotieren. Klappt prima. Dann sitzt jemand aus einem Unternehmen dabei der mir sagt "das Rating bei [sslLabs](https://www.ssllabs.com/ssltest) könnte aber besser sein.
+Bei meinen Trainings richten wir natürlich irgendwann den `cert-manager` ein. Es muss ja schließlich keiner mehr mit `openssl` selbstsignierte Zertifikate nutzen. Daher fällt die Wahl auf den `ClusterIssuer` für Let's Encrypt leicht. Eine Ingress-Annotation (`cert-manager.io/issuer`), und der Cluster holt sich seine TLS-Zertifikate selbstständig inkl. Ablage in einem Secret sowie automatischem Rotieren bzw. Re-Issue. Klappt prima. Dann sitzt jemand aus einem Unternehmen dabei der mir sagt "das Rating bei [sslLabs](https://www.ssllabs.com/ssltest) könnte aber besser sein.
 <TODO: Bild>
 Im Cluster ist alles richtig konfiguriert und sogar der Klassiker [`tlsserver`](https://letsencrypt.org/docs/profiles/#tlsserver) steht im Issuer. Das Problem liegt woanders.
 ## TL:DR;
