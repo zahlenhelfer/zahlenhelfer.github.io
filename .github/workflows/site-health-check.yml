@@ -1,0 +1,76 @@
+name: Site Health Check
+
+on:
+  # safety net: run on a schedule
+  schedule:
+    - cron: "0 */6 * * *"   # every 6 hours
+  # run right after a deploy finishes, for fast feedback
+  workflow_run:
+    workflows: ["Build and Deploy"]
+    types: [completed]
+  # allow manual runs from the Actions tab
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Crawl live site for Liquid errors and reachability
+        env:
+          SITE: "https://zahlenhelfer.github.io"
+        run: |
+          set -uo pipefail
+
+          # Markers Jekyll renders inline when liquid.error_mode = warn (the default).
+          PATTERN='Liquid error|Liquid syntax error|Liquid Exception'
+
+          echo "Fetching sitemap: $SITE/sitemap.xml"
+          SITEMAP="$(curl -fsSL --retry 3 --retry-delay 5 "$SITE/sitemap.xml")" || {
+            echo "::error::Could not fetch sitemap.xml - the site may be down."
+            exit 1
+          }
+
+          URLS="$(printf '%s' "$SITEMAP" | grep -oE '<loc>[^<]+</loc>' | sed -E 's#</?loc>##g')"
+          if [ -z "$URLS" ]; then
+            echo "::error::No <loc> URLs found in sitemap.xml."
+            exit 1
+          fi
+
+          COUNT="$(printf '%s\n' "$URLS" | grep -c .)"
+          echo "Checking $COUNT pages..."
+
+          FAILED=0
+          while IFS= read -r url; do
+            [ -z "$url" ] && continue
+
+            # No -f here: we want the body AND the status code even on 4xx/5xx.
+            body="$(curl -sSL --retry 2 --max-time 30 \
+                      -w '\n__HTTP_%{http_code}__' "$url" 2>/dev/null)" || {
+              echo "::error::Unreachable: $url"
+              FAILED=1
+              continue
+            }
+
+            code="$(printf '%s' "$body" | grep -oE '__HTTP_[0-9]+__' | tail -1 | tr -dc '0-9')"
+            if [ "${code:-000}" != "200" ]; then
+              echo "::error::HTTP ${code:-000}: $url"
+              FAILED=1
+              continue
+            fi
+
+            if printf '%s' "$body" | grep -qiE "$PATTERN"; then
+              hit="$(printf '%s' "$body" | grep -oiE "($PATTERN)[^<]{0,90}" | head -1)"
+              echo "::error::Liquid error on $url -> ${hit}"
+              FAILED=1
+            fi
+          done <<< "$URLS"
+
+          echo "------------------------------------------------------------"
+          if [ "$FAILED" -ne 0 ]; then
+            echo "::error::Site health check FAILED - see annotations above."
+            exit 1
+          fi
+          echo "OK: $COUNT pages reachable, no Liquid errors found."
