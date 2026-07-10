@@ -1,5 +1,5 @@
 ---
-title: WeAreDevelopers
+title: WeAreDevelopers - what a conference
 date: 2026-07-11
 categories:
 tags:
