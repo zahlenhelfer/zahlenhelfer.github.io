@@ -27,13 +27,13 @@ Which leads straight to the first problem: do I even know what I am supposed to 
 
 Look at this picture.
 
-&#91;image: A forest in black and white: leaves, a tree trunk, shadows\]
+A forest in black and white: leaves, a tree trunk, shadows\
 
 Trees. Shadows. Possibly a nice place for a walk. That is me looking at an AI system for the first time: I see a forest, and I know nothing about what lives in it.
 
 Now look at the second one.
 
-&#91;image: The same forest in color: a dark big cat sits at the foot of the tree\]
+The same forest in color: a dark big cat sits at the foot of the tree
 
 *Both pictures: Beau Lotto, [Optical illusions show how we see](https://www.youtube.com/watch?v=mf5otGNbkuc), TED*
 
