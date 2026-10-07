@@ -1,5 +1,5 @@
 ---
-title: Same Bug, Two Languages, Part 1: Do You See the Threat?
+title: Same Bug, Two Languages, Part 1 - Do You See the Threat?
 date: 2026-10-07
 categories:
 tags:
