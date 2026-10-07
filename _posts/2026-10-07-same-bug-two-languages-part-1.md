@@ -26,8 +26,9 @@ Which leads straight to the first problem: do I even know what I am supposed to 
 ## A quick test: what do you see?
 
 Look at this picture.
+![SSL-Labs-CAA-Not-Found](assets/images/panther-bw.png)
 
-A forest in black and white: leaves, a tree trunk, shadows\
+A forest in black and white: leaves, a tree trunk, shadows
 
 Trees. Shadows. Possibly a nice place for a walk. That is me looking at an AI system for the first time: I see a forest, and I know nothing about what lives in it.
 
