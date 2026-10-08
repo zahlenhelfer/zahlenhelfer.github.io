@@ -2,6 +2,10 @@
 title: Same Bug, Two Languages, Part 1 - Do You See the Threat?
 date: 2026-10-07
 categories:
+  - ai
+  - llm
+  - owasp
+  - security
 tags:
   - ai
   - security
@@ -11,7 +15,6 @@ published: true
 render_with_liquid: "false"
 permalink: /:year/:month/:day/:title:output_ext
 ---
-# Same Bug, Two Languages, Part 1: Do You See the Threat?
 
 ## AI just moved into your platform. Now what?
 
