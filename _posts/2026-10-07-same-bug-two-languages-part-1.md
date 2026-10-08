@@ -17,11 +17,11 @@ permalink: /:year/:month/:day/:title:output_ext
 
 At some point AI stops being a slide in somebody's strategy deck and becomes a workload on your platform. You have two options: ignore it and hope it goes away, or get curious.
 
-Ignoring it has never worked for anything that ended up in my cluster, so I got curious. And curious, for me, has a specific meaning. When I worked through IT-Grundschutz and ISO 27001 for Kubernetes, I did not start with the controls. I started with the question: what nasty things can I do to this?
+Ignoring it has never worked for anything that ended up in my cluster, so I got curious. And curious, for me, has a specific meaning. When I worked through IT-Grundschutz / ISO27001 for Kubernetes, I did not start with the controls. I started with the question: what nasty things can I do to this?
 
 Same approach here. I take a small test project, look for the lowest-hanging fruit, and try to compromise it. Only then do I open the standards.
 
-Which leads straight to the first problem: do I even know what I am supposed to hack?
+Which leads straight to the first problem: do I even know what I am supposed to do/hack?
 
 ## A quick test: what do you see?
 
@@ -33,6 +33,7 @@ A forest in black and white: leaves, a tree trunk, shadows
 Trees. Shadows. Possibly a nice place for a walk. That is me looking at an AI system for the first time: I see a forest, and I know nothing about what lives in it.
 
 Now look at the second one.
+![](assets/images/panther-colour.png)
 
 The same forest in color: a dark big cat sits at the foot of the tree
 
@@ -40,18 +41,18 @@ The same forest in color: a dark big cat sits at the foot of the tree
 
 You spotted the big cat immediately. It was there the whole time, and it was looking at you the whole time. The only thing that changed is the amount of information in the picture: we added color.
 
-That is the job of this series. The threat is already in the system. I am not going to add a big cat, I am going to add color until you cannot unsee it.
+That is the job of this series. The threat is already in the system. I am not going to add a big cat, I am going to add color until you cannot unsee it. We keep it straight and simple - we can add complexity later. Learn to walk, then run and then you do your marathon.
 
 ## The test subject: a boring ticket system
 
 To add color I need something to point the light at. I picked a simple project: a service management system. Tickets come in, somebody works on them, and an LLM helps along the way.
 
-It is deliberately boring. Nobody learns anything from a contrived lab that exists only to be broken. A ticket system is something you already run, or something the team next door is about to "enhance with AI" before the next planning cycle.
+It is deliberately boring. Nobody learns anything from a contrived lab that exists only to be broken. A ticket system is something you already run, or something the team next door is about to "enhance with AI" before the next planning cycle. And yes, it is often the obvious choice to start, with your AI adoption strategy.
 
 It also has the three ingredients that make this interesting:
 
 - It takes text from people you do not control. That is the whole point of a ticket.
-- It holds data that is not meant for everybody.
+- It holds data that is not meant for everybody. - we will discuss if this is a good idea.
 - There is a model in the middle that reads the first and can reach the second.
 
 If you have a security background, that list should already make you slightly uncomfortable. Hold that feeling. We will give it a name in a minute.
@@ -69,7 +70,7 @@ It is also why the series is called "Same Bug, Two Languages". Developers and au
 
 ## First pick: prompt injection
 
-For the technical pass I need a map, and the obvious one is the [OWASP Top 10 for LLM Applications](https://genai.owasp.org/llm-top-10/). I did what any lazy attacker would do and started at the top.
+For the technical pass I need an idea, and the obvious one is the [OWASP Top 10 for LLM Applications](https://genai.owasp.org/llm-top-10/). I did what any lazy attacker would do and started at the top. (if you think about OWASP Top 10 - yes, but they even have AI flavor lists!)
 
 The first entry is [LLM01:2025 Prompt Injection](https://genai.owasp.org/llmrisk/llm01-prompt-injection/). OWASP describes it as input that changes the model's behavior or output in ways nobody intended. The first consequence on its list is the disclosure of sensitive information, which happens to be exactly what I am after.
 
@@ -109,7 +110,7 @@ If the answer is "nowhere", look again. In color.
 
 ## Hint: the bigger map
 
-Prompt injection is one tree in the forest. If you want to see the whole forest in color, the OWASP AI Exchange has it on a single slide.
+Prompt injection is one tree in the forest. If you want to see the whole forest in color, the OWASP AI Exchange has it on a single slide, but remember what I said. We start small and then go big. You get the idea with this picture where it leads to.
 
 ![AI security essentials: threats and controls, OWASP AI Exchange](assets/images/owasp-ai-threats.png)
 *Source: [OWASP AI Exchange, AI security essentials](https://owaspai.org/images/essentials6.png)*
@@ -120,7 +121,7 @@ How to read it for this series:
 - **Left, top and middle:** everything we are not doing yet. Supply chain threats around training data, machine learning and model hosting, plus the conventional threats of leaking and poisoning.
 - **Right:** the controls. The colors match the threat boxes, so the purple input threats point you to data/model engineering controls and model I/O handling.
 
-Keep this picture open in a tab. In the translation pass, every finding from the attack has to land on one of the boxes on the right.
+Keep this picture open in a tab. In the translation pass, every finding from the attack has to land on one of the boxes on the right. In the next post, we will setup the ticket-system with data and try to set some guardrails. There will be source code, I promise.
 
 ## Sources
 
