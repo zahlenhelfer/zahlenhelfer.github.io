@@ -111,8 +111,7 @@ If the answer is "nowhere", look again. In color.
 
 Prompt injection is one tree in the forest. If you want to see the whole forest in color, the OWASP AI Exchange has it on a single slide.
 
-&#91;image: AI security essentials: threats and controls, OWASP AI Exchange\]
-
+![AI security essentials: threats and controls, OWASP AI Exchange](assets/images/owasp-ai-threats.png)
 *Source: [OWASP AI Exchange, AI security essentials](https://owaspai.org/images/essentials6.png)*
 
 How to read it for this series:
