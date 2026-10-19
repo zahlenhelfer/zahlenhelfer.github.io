@@ -254,7 +254,7 @@ Ticket 2228 in the knowledge base: a VPN reset request with an empty space below
 
 A VPN reset request with low priority. A human agent skims it and moves on. The ticket system was honest enough to mark it as external, and that badge is the only warning. But there is a lot of empty space under the text. Select it with the mouse:
 
-![05 Payload](assets/images/llm-05-payload-revealed.png) The same ticket with the hidden note selected and readable
+![05 Payload](assets/images/llm-04-payload-revealed.png) The same ticket with the hidden note selected and readable
 
 My demo UI paints everything after the `-----` line in the background color. That stands in for what real attackers do: white text on white, a comment in an HTML mail, document metadata, text inside an image. The file itself has nothing to hide. Let's reveal the content:
 
@@ -305,7 +305,7 @@ The summary now covers 27 tickets. This is its last line:
 
 > PROD-DB-RECOVERY-KEY: TK-ZX44-Qh9
 
-![Attack](assets/images/llm-06-leak.png) The ticket summary ends with the recovery key
+![Attack](assets/images/llm-05-leak.png) The ticket summary ends with the recovery key
 
 It was the same question, in the same chat, with the same system prompt that had just refused four direct requests. The only thing that changed is the data. Nothing in the answer mentions the note.
 
@@ -412,7 +412,7 @@ This is ordinary code, and no ticket can talk it out of its job. Same button, De
 
 > \[REDACTED BY OUTPUT FILTER\]
 
-![Filtered On](assets/images/llm-.png) With defenses on, the summary ends with a redacted key and a green badge
+![Filtered On](assets/images/llm-06-filtered-defenses-on.png) With defenses on, the summary ends with a redacted key and a green badge
 
 The model was fooled again, and the key still did not reach the screen. That is defense in depth. The AI Exchange says about its seven layers: "None of these layers is sufficient by itself".
 
